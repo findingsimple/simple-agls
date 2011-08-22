@@ -7,9 +7,9 @@ class WPAGLS_Admin_Page extends scbAdminPage {
 		$this->textdomain = 'wpagls';
 	
 		$this->args = array(
-			'page_title' => 'WP-DFP Settings',
-			'menu_title' => __( 'DFP', $this->textdomain ),
-			'page_slug' => 'wp-dfp',
+			'page_title' => 'WP-AGLS Settings',
+			'menu_title' => __( 'AGLS Metadata', $this->textdomain ),
+			'page_slug' => 'wp-agls',
 		);
 	}
 
