@@ -38,7 +38,8 @@ Coming Soon
 * initial release
 
 == To-do's & Ideas ==
-* Add meta box to all post types
+* Add meta box/s to all post types
 * Add options page/tab that allows enabling / disabling various meta data
 * Add options for auto populating
+* Custom Meta Fields for categories and tags?
 
