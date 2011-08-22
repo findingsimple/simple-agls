@@ -37,3 +37,8 @@ Coming Soon
 = 1.0 =
 * initial release
 
+== To-do's & Ideas ==
+* Add meta box to all post types
+* Add options page/tab that allows enabling / disabling various meta data
+* Add options for auto populating
+
