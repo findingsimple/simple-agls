@@ -594,7 +594,6 @@ if (!class_exists("WPAGLS_Core")) {
 		
 			/* If an author was found, wrap it in the proper HTML and escape the author name. */
 			if ( !empty( $contributor ) ) {
-				$contributor = get_option( 'agls_creator_corporate_name' ); //request to always use corporate name
 				$tag = '<meta name="DCTERMS.contributor" content="' . esc_attr( $contributor ) . '" />' . "\n";
 			}
 			
