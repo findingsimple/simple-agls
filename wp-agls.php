@@ -24,29 +24,16 @@ License: GPL2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-//
-
-require dirname(__FILE__) . '/scb/load.php';
-
-function _wpagls_init() {
+function wpagls_init() {
 
 	load_plugin_textdomain( 'wpagls', '', dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
 	require_once dirname( __FILE__ ) . '/core.php';
-
-	// Creating an options object
-	$options = new scbOptions( 'wpagls', __FILE__, array(
-		'property_code' => __( 'ca-pub-', 'wpdfp' ),
-		'ad_units' => __( '', 'wpdfp' ),
-		'use_iframe' => __( 'no', 'wpdfp' )
-	) );
 	
-	WPAGLS_Core::init( $options );
-
-	// Creating a settings page object
-	if ( is_admin() ) {
-		require_once dirname( __FILE__ ) . '/admin/admin.php';
-		new WPAGLS_Admin_Page( __FILE__, $options );
+	if (class_exists("WPAGLS_Core")) {
+		$wpagls = new WPAGLS_Core();
 	}
+
 }
-scb_init( '_wpagls_init' );
+
+add_action('init','wpagls_init');

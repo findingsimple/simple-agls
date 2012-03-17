@@ -10,10 +10,6 @@ Stable tag: 1.0
 
 Simple plugin that helps integrate AGLS meta data into you WordPress powered site.
 
-**Credits:**
-
-* [Scribu](http://scribu.net), for the scb framework
-
 Links: [Author's Site](http://findingsimple.com/)
 
 == Installation ==
