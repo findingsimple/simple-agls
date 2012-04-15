@@ -8,7 +8,7 @@ Author: Jason Conroy
 Author URI: http://findingsimple.com
 License: GPL2
 */
-/*  Copyright 2011  Jason Conroy  (email : plugins@findingsimple.com)
+/*  Copyright 2012  Jason Conroy  (email : plugins@findingsimple.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -29,10 +29,13 @@ function wpagls_init() {
 	load_plugin_textdomain( 'wpagls', '', dirname( plugin_basename( __FILE__ ) ) . '/lang' );
 
 	require_once dirname( __FILE__ ) . '/core.php';
+	require_once dirname( __FILE__ ) . '/admin/admin.php';
 	
-	if (class_exists("WPAGLS_Core")) {
+	if (class_exists("WPAGLS_Core"))
 		$wpagls = new WPAGLS_Core();
-	}
+	
+	if (class_exists("WPAGLS_Admin"))
+		$wpagls_admin = new WPAGLS_Admin();
 
 }
 

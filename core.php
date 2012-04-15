@@ -46,7 +46,7 @@ if (!class_exists("WPAGLS_Core")) {
 		 */
 		function agls_comment_start() {
 		
-			$tag = '<!-- AGLS Meta START -->' . "\n";
+			$tag = '<!-- WP-AGLS Meta Version XX START -->' . "\n";
 		
 			echo apply_filters( 'agls_comment_start', $tag );
 			
