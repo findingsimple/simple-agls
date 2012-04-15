@@ -73,9 +73,9 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$name = get_option( 'agls_creator_corporate_name' );
-			$address = get_option( 'agls_creator_address' );
-			$contact = get_option( 'agls_creator_contact' );
+			$name = get_option( 'agls-creator-corporate-name' );
+			$address = get_option( 'agls-creator-address' );
+			$contact = get_option( 'agls-creator-contact' );
 		
 			if ( ( !empty($name) ) && ( !empty($address) ) && ( !empty($contact) ) )
 				$tag = '<meta name="DCTERMS.creator" content="CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';" />' . "\n";
@@ -321,9 +321,9 @@ if (!class_exists("WPAGLS_Core")) {
 			$tag = '';
 			$publisher = '';
 		
-			$name = get_option( 'agls_creator_corporate_name' );
-			$address = get_option( 'agls_creator_address' );
-			$contact = get_option( 'agls_creator_contact' );
+			$name = get_option( 'agls-creator-corporate-name' );
+			$address = get_option( 'agls-creator-address' );
+			$contact = get_option( 'agls-creator-contact' );
 			
 			if ( ( !empty($name) ) && ( !empty($address) ) && ( !empty($contact) ) ) {
 				$default = 'CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';';
@@ -331,7 +331,7 @@ if (!class_exists("WPAGLS_Core")) {
 				$default = '';
 			}
 			
-			$sitewide = get_option( 'agls_publisher' );
+			$sitewide = get_option( 'agls-publisher' );
 			$individual = get_post_meta( $post->ID , 'DCTERMS.publisher', true );
 		
 			if (!empty($default))
@@ -388,7 +388,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$default = get_option( 'agls_function' );
+			$default = get_option( 'agls-function' );
 			
 			$individual = get_post_meta( $post->ID , 'AGLSTERMS.function', true );
 		
@@ -486,7 +486,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$default = get_option( 'agls_audience' );
+			$default = get_option( 'agls-audience' );
 			
 			$individual = get_post_meta( $post->ID , 'DCTERMS.audience', true );
 		
@@ -520,7 +520,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$default = get_option( 'agls_coverage' );
+			$default = get_option( 'agls-coverage' );
 			
 			$individual = get_post_meta( $post->ID , 'DCTERMS.coverage', true );
 		
@@ -553,7 +553,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$sitewide = get_option( 'agls_language' );
+			$sitewide = get_option( 'agls-language' );
 			
 			$language = 'en-AU';
 			
@@ -637,7 +637,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$default = get_option( 'agls_mandate' );
+			$default = get_option( 'agls-mandate' );
 			
 			$individual = get_post_meta( $post->ID , 'AGLSTERMS.mandate', true );
 		
@@ -696,7 +696,7 @@ if (!class_exists("WPAGLS_Core")) {
 			/*Set blank variable */
 			$tag = '';
 		
-			$sitewide = get_option( 'agls_rights' );
+			$sitewide = get_option( 'agls-rights' );
 			
 			$individual = get_post_meta( $post->ID , 'DCTERMS.rights', true );
 		
