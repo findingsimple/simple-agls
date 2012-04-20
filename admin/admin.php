@@ -1,5 +1,7 @@
 <?php
 
+/* Settings for schema selection/setting site-wide */
+
 if (!class_exists("WPAGLS_Admin")) {
 	
 	class WPAGLS_Admin {
