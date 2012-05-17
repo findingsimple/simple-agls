@@ -303,7 +303,7 @@ class FS_AGLS {
 			$title = get_bloginfo( 'name' );
 		}
 
-		if ( !empty( $individual ) && !show_default ) 
+		if ( !empty( $individual ) && !$show_default ) 
 			$title = $individual;
 
 		if ( !empty( $title ) )
@@ -403,7 +403,7 @@ class FS_AGLS {
 	 * @package WP AGLS
 	 * @since 1.0
 	 */
-	public static function agls_publisher($show_default = false, $return = false) {
+	public static function agls_publisher( $show_default = false, $return = false ) {
 
 		global $post;
 

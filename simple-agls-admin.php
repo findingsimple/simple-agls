@@ -23,14 +23,21 @@ class FS_AGLS_Admin {
 
 	public static function init() {  
 
-		// create custom plugin settings menu
+		/* create custom plugin settings menu */
 		add_action( 'admin_menu',  __CLASS__ . '::wpagls_create_menu' );
+
+		/* Add the post AGLS meta box on the 'add_meta_boxes' hook. */
+		add_action( 'add_meta_boxes', __CLASS__ . '::add_agls_meta_box' );
+
+		/* Save the post AGLS meta box data on the 'save_post' hook. */
+		add_action( 'save_post', __CLASS__ . '::save_agls_meta_box', 10, 2 );
+
 	}
 
 	public static function wpagls_create_menu() {
 
 		//create new top-level menu
-		add_options_page( 'AGLS Settings', 'AGLS', 'administrator', 'simple_agls', __CLASS__ . '::wpagls_settings_page', plugins_url( '/images/icon.png', __FILE__ ) );
+		add_options_page( 'AGLS Settings', 'AGLS', 'administrator', 'simple_agls', __CLASS__ . '::wpagls_settings_page' );
 
 		//call register settings function
 		add_action( 'admin_init',  __CLASS__ . '::register_mysettings' );
@@ -255,7 +262,178 @@ class FS_AGLS_Admin {
 		
 	}
 
+	/**
+	 * Adds the post SEO meta box for all public post types.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function add_agls_meta_box() {
+
+		/* Get all available public post types. */
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+
+		/* Loop through each post type, adding the meta box for each type's post editor screen. */
+		foreach ( $post_types as $type )
+			add_meta_box( 'agls-meta-data', sprintf( __( 'AGLS Metadata', FS_AGLS::$text_domain ), $type->labels->singular_name ), __CLASS__ . '::agls_meta_box_display', $type->name, 'normal', 'high' );
+	}
+
+	/**
+	 * Displays the AGLS meta box.
+	 *
+	 * @since 1.2.0
+	 */
+	public static function agls_meta_box_display( $object, $box ) { ?>
+
+		<input type="hidden" name="eeo-agls-meta-box-seo" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />
+
+		<div class="post-settings">
+
+		<p>
+			<label for="agls-title"><?php _e( 'Title:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-title" id="agls-title" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.title', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_title( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-description"><?php _e( 'Description:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<textarea name="agls-description" id="agls-description" cols="60" rows="2" tabindex="30" style="width: 99%;"><?php echo esc_textarea( get_post_meta( $object->ID, 'DCTERMS.description', true ) ); ?></textarea>
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_description( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-subject"><?php _e( 'Subject:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-subject" id="agls-subject" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.subject', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_subject( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-publisher"><?php _e( 'Publisher:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-publisher" id="agls-publisher" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.publisher', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_publisher( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-availability"><?php _e( 'Availability:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-availability" id="agls-availability" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.availability', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+		</p>
+
+		<p>
+			<label for="agls-function"><?php _e( 'Function:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-function" id="agls-function" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.function', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_function( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-mandate"><?php _e( 'Mandate:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-mandate" id="agls-mandate" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.mandate', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_mandate( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-audience"><?php _e( 'Audience:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-audience" id="agls-audience" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.audience', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_audience( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-coverage"><?php _e( 'Coverage:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-coverage" id="agls-coverage" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.coverage', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_coverage( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-relation"><?php _e( 'Relation:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-relation" id="agls-relation" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.relation', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+		</p>
+
+		<p>
+			<label for="agls-rights"><?php _e( 'Rights:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-rights" id="agls-rights" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.rights', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+			<br />
+			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_rights( true , true ); ?></span>
+		</p>
+
+		<p>
+			<label for="agls-source"><?php _e( 'Source:', FS_AGLS::$text_domain ); ?></label>
+			<br />
+			<input type="text" name="agls-source" id="agls-source" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.source', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
+		</p>
+
+		</div><!-- .form-table --><?php
+	}
+
+	/**
+	 * Saves the post AGLS meta box settings as post metadata.
+	 *
+	 */
+	public static function save_agls_meta_box( $post_id, $post ) {
+
+		/* Verify the nonce before proceeding. */
+		if ( !isset( $_POST['eeo-agls-meta-box-seo'] ) || !wp_verify_nonce( $_POST['eeo-agls-meta-box-seo'], basename( __FILE__ ) ) )
+			return $post_id;
+
+		/* Get the post type object. */
+		$post_type = get_post_type_object( $post->post_type );
+
+		/* Check if the current user has permission to edit the post. */
+		if ( !current_user_can( $post_type->cap->edit_post, $post_id ) )
+			return $post_id;
+
+		$meta = array(
+			'DCTERMS.title' => strip_tags( $_POST['agls-title'] ),
+			'DCTERMS.description' => strip_tags( $_POST['agls-description'] ),
+			'DCTERMS.subject' => strip_tags( $_POST['agls-subject'] ),
+			'DCTERMS.publisher' => strip_tags( $_POST['agls-publisher'] ),
+			'AGLSTERMS.availability' => strip_tags( $_POST['agls-availability'] ),
+			'AGLSTERMS.function' => strip_tags( $_POST['agls-function'] ),
+			'AGLSTERMS.mandate' => strip_tags( $_POST['agls-mandate'] ),
+			'DCTERMS.audience' => strip_tags( $_POST['agls-audience'] ),
+			'DCTERMS.coverage' => strip_tags( $_POST['agls-coverage'] ),
+			'DCTERMS.relation' => strip_tags( $_POST['agls-relation'] ),
+			'DCTERMS.rights' => strip_tags( $_POST['agls-rights'] ),
+			'DCTERMS.source' => strip_tags( $_POST['agls-source'] )
+		);
+
+		foreach ( $meta as $meta_key => $new_meta_value ) {
+
+			/* Get the meta value of the custom field key. */
+			$meta_value = get_post_meta( $post_id, $meta_key, true );
+
+			/* If a new meta value was added and there was no previous value, add it. */
+			if ( $new_meta_value && '' == $meta_value )
+				add_post_meta( $post_id, $meta_key, $new_meta_value, true );
+
+			/* If the new meta value does not match the old value, update it. */
+			elseif ( $new_meta_value && $new_meta_value != $meta_value )
+				update_post_meta( $post_id, $meta_key, $new_meta_value );
+
+			/* If there is no new meta value but an old value exists, delete it. */
+			elseif ( '' == $new_meta_value && $meta_value )
+				delete_post_meta( $post_id, $meta_key, $meta_value );
+		}
+	}
+
 }
 
 }
+
 
