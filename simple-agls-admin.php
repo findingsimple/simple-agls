@@ -283,6 +283,10 @@ class SIMPLE_AGLS_Admin {
 	 * @since 1.2.0
 	 */
 	public static function agls_meta_box_display( $object, $box ) { ?>
+	
+		<?php $args = array (
+			'echo' => false
+		); ?>
 
 		<input type="hidden" name="eeo-agls-meta-box-seo" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />
 
@@ -293,7 +297,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-title" id="agls-title" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.title', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_title( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_title( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -301,7 +305,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<textarea name="agls-description" id="agls-description" cols="60" rows="2" tabindex="30" style="width: 99%;"><?php echo esc_textarea( get_post_meta( $object->ID, 'DCTERMS.description', true ) ); ?></textarea>
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_description( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_description( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -309,7 +313,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-subject" id="agls-subject" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.subject', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_subject( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_subject( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -317,7 +321,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-publisher" id="agls-publisher" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.publisher', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_publisher( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_publisher( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -331,7 +335,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-function" id="agls-function" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.function', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_function( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_function( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -339,7 +343,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-mandate" id="agls-mandate" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.mandate', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_mandate( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_mandate( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -347,7 +351,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-audience" id="agls-audience" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.audience', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_audience( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_audience( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -355,7 +359,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-coverage" id="agls-coverage" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.coverage', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_coverage( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_coverage( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>
@@ -369,7 +373,7 @@ class SIMPLE_AGLS_Admin {
 			<br />
 			<input type="text" name="agls-rights" id="agls-rights" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.rights', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_rights( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php $default = SIMPLE_AGLS::agls_rights( $args ); echo $default['content']; ?></span>
 		</p>
 
 		<p>

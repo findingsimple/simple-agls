@@ -45,15 +45,15 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
  * @package SIMPLE-AGLS
  * @since 1.0
  */
-function simple_initialize_wp_agls() {
+function initialize_simple_agls() {
 	SIMPLE_AGLS::init();
 }
-add_action( 'init', 'simple_initialize_wp_agls', -1 );
+add_action( 'init', 'initialize_simple_agls', -1 );
 
 
 class SIMPLE_AGLS {
 
-	static $text_domain;
+	static $text_domain, $defaults;
 
 	/**
 	 * Hook into WordPress where appropriate.
@@ -64,8 +64,18 @@ class SIMPLE_AGLS {
 	 */
 	public static function init() {
 
-		self::$text_domain = apply_filters( 'wp_agls_text_domain', 'WP_AGLS' );
-
+		self::$text_domain = apply_filters( 'simple_agls_text_domain', 'SIMPLE_AGLS' );
+		
+		self::$defaults = array( 
+			'element' => 'meta', 
+			'echo' => true, 
+			'show_default' => false,
+			'before' => '', 
+			'after' => "\n",
+			'start' => "<!-- SIMPLE-AGLS START -->",
+			'end' => "<!-- SIMPLE-AGLS END -->"
+		); 
+						
 		/* Top */
 		add_action( 'wp_head', __CLASS__ .'::agls_comment_start', 1 ); 
 
@@ -110,15 +120,16 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_comment_start( $return = false ) {
-
-		$tag = '<!-- SIMPLE-AGLS Meta START -->' . "\n";
+	public static function agls_comment_start( $args = array() ) {
+	
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_comment_start_args', $args );
+		extract( $args, EXTR_SKIP );
 		
-		if ( !$return ) {
-			echo apply_filters( 'agls_comment_start', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo )
+			return $before . $start . $after;
+		
+		echo $before . $start . $after;
 
 	}
 
@@ -129,15 +140,16 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_comment_end( $return = false ) {
+	public static function agls_comment_end( $args = array() ) {
 
-		$tag = '<!-- SIMPLE-AGLS Meta END -->' . "\n";
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_comment_end_args', $args );
+		extract( $args, EXTR_SKIP );
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_comment_end', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo )
+			return $before . $end . $after;
+		
+		echo $before . $end . $after;
 		
 	}
 
@@ -148,19 +160,34 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_schema( $return = false ) {
+	public static function agls_schema( $args = array() ) {
 
-		/* Set blank variable */
-		$tag = '';
-
-		$tag .= '<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">' . "\n";
-		$tag .= '<link rel="schema.AGLSTERMS" href="http://www.agls.gov.au/agls/terms/">' . "\n";
+		$args['element'] = 'link';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_schema_args', $args );
+		extract( $args, EXTR_SKIP );
 		
-		if ( !$return ) {
-			echo apply_filters( 'agls_schema', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		$attributes = array(
+			'rel' => 'schema.DCTERMS',
+			'href' => 'http://purl.org/dc/terms/'
+		);
+		
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
+
+		$attributes = array(
+			'rel' => 'schema.AGLSTERMS',
+			'href' => 'http://www.agls.gov.au/agls/terms/'
+		);
+
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -171,55 +198,100 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_creator( $return = false ) {
+	public static function agls_creator( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_creator_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$name = get_option( 'agls-creator-corporate-name' );
 		$address = get_option( 'agls-creator-address' );
 		$contact = get_option( 'agls-creator-contact' );
 
-		if ( ( !empty($name) ) && ( !empty($address) ) && ( !empty($contact) ) )
-			$tag = '<meta name="DCTERMS.creator" content="CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';" />' . "\n";
+		if ( ( !empty($name) ) && ( !empty($address) ) && ( !empty($contact) ) ) {
+
+			$attributes = array(
+				'name' => 'DCTERMS.creator',
+				'content' => 'CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';'
+			);
 		
-		if ( !$return ) {
-			echo apply_filters( 'agls_creator', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
+		
 	}
 
 	/**
 	 * Date term
 	 *
-	 * Auto populates with date create and modified
+	 * Auto populates with date created
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_date( $return = false ) {
+	public static function agls_date( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_date_args', $args );
+		extract( $args, EXTR_SKIP );
 
-		/* If viewing a singular post, get the last modified date/time to use in the revised meta tag. */
+		$attributes = array();
+
 		if ( is_singular() ) {
 
-			$tag = '<meta name="DCTERMS.date" content="' .  get_the_date( 'c' ) . '" />' . "\n";
-
-			if ( get_the_modified_time() != get_the_time() ) 
-				$tag.= '<meta name="DCTERMS.modified" content="' .  get_the_modified_time( esc_attr__( 'c', self::$text_domain ) ) . '"/>' . "\n";
+			$attributes = array(
+				'name' => 'DCTERMS.date',
+				'content' => get_the_date( 'c' )
+			);
 
 		}
 		
-		if ( !$return ) {
-			echo apply_filters( 'agls_date', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
+
+	}
+	
+	/**
+	 * Date Modified term
+	 *
+	 * Auto populates with date modified
+	 *
+	 * @author Jason Conroy <jason@findingsimple.com>
+	 * @package SIMPLE-AGLS
+	 * @since 1.0
+	 */
+	public static function agls_date_modified( $args = array() ) {
+
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_date_modified_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
+
+		if ( is_singular() && ( get_the_modified_time() != get_the_time() ) ) {
+
+			$attributes = array(
+				'name' => 'DCTERMS.modified',
+				'content' => get_the_modified_time( 'c' )
+			);
+
 		}
+		
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -230,15 +302,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_description($show_default = false, $return = false) {
+	public static function agls_description( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_description_args', $args );
+		extract( $args, EXTR_SKIP );
 
-		/* Set an empty $description variable. */
-		$description = '';
+		$attributes = array();
 
 		/* If viewing the home/posts page, get the site's description. */
 		if ( is_home() )
@@ -292,13 +364,16 @@ class SIMPLE_AGLS {
 
 		/* Format the description. */
 		if ( !empty( $description ) )
-			$tag = '<meta name="DCTERMS.description" content="' . str_replace( array( "\r", "\n", "\t" ), '', esc_attr( strip_tags( $description ) ) ) . '" />' . "\n";
-
-		if (!$return) {
-			echo apply_filters( 'agls_description', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+			$attributes = array(
+				'name' => 'DCTERMS.description',
+				'content' => str_replace( array( "\r", "\n", "\t" ), '', esc_attr( strip_tags( $description ) ) )
+			);
+		
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -309,12 +384,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_title($show_default = false, $return = false) {
+	public static function agls_title( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_title_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$individual = get_post_meta( $post->ID, 'DCTERMS.title', true );
 
@@ -348,13 +426,16 @@ class SIMPLE_AGLS {
 			$title = $individual;
 
 		if ( !empty( $title ) )
-			$tag = '<meta name="DCTERMS.title" content="' . esc_attr( $title ) . '" />' . "\n";	
+			$attributes = array(
+				'name' => 'DCTERMS.title',
+				'content' => esc_attr( $title )
+			);
 
-		if (!$return) {
-			echo apply_filters( 'agls_title', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -367,10 +448,13 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_identifier($return = false) {
+	public static function agls_identifier( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_identifier_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		if (is_singular()) {
 			$url = get_permalink();
@@ -400,13 +484,16 @@ class SIMPLE_AGLS {
 			$url = '';
 		}
 
-		$tag = '<meta name="DCTERMS.identifier" content="' . $url . '" />' . "\n";
+		$attributes = array(
+			'name' => 'DCTERMS.identifier',
+			'content' => $url
+		);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_identifier', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -417,23 +504,29 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_availability($return = false) {
+	public static function agls_availability( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_availability_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$availability = get_post_meta( $post->ID, 'AGLSTERMS.availability', true );
 
 		if ( !empty( $availability ) )
-			$tag = '<meta name="AGLSTERMS.availability" content="' . $availability . '" />' . "\n";
+			$attributes = array(
+				'name' => 'AGLSTERMS.availability',
+				'content' => $availability
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_availability', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -444,12 +537,16 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_publisher( $show_default = false, $return = false ) {
+	public static function agls_publisher( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_publisher_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
+		
 		$publisher = '';
 
 		$name = get_option( 'agls-creator-corporate-name' );
@@ -474,17 +571,20 @@ class SIMPLE_AGLS {
 		if (!empty($individual) && !$show_default)
 			$publisher = $individual;
 
-		if ( !empty($publisher ) )
-			$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
-		
-		if ( ( !empty($publisher ) ) && ( !empty( $default ) ) && ( empty( $individual )) && ( empty( $sitewide ))) 
-			$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
+		//if ( ( !empty($publisher ) ) && ( !empty( $default ) ) && ( empty( $individual )) && ( empty( $sitewide ))) 
+		//	$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_publisher', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !empty($publisher ) )
+			$attributes = array(
+				'name' => 'DCTERMS.publisher',
+				'content' => $publisher
+			);
+
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -497,18 +597,24 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_type($return = false) {
+	public static function agls_type( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_type_args', $args );
+		extract( $args, EXTR_SKIP );
 
-		$tag = '<meta name="DCTERMS.type" content="text" />' . "\n";
+		$attributes = array();
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_type', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );	
-		}
+		$attributes = array(
+			'name' => 'DCTERMS.type',
+			'content' => 'text'
+		);
+
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -519,12 +625,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_function($show_default = false, $return = false) {
+	public static function agls_function( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_function_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$default = get_option( 'agls-function' );
 
@@ -539,13 +648,16 @@ class SIMPLE_AGLS {
 			$function = $individual;
 
 		if (!empty($function)) 
-			$tag = '<meta name="AGLSTERMS.function" content="' . esc_attr( $function ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'AGLSTERMS.function',
+				'content' => esc_attr( $function )
+			);
 
-		if (!$return) {
-			echo apply_filters( 'agls_function', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -556,12 +668,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_subject($show_default = false, $return = false) {
+	public static function agls_subject( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_subject_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		/* Set an empty $keywords variable. */
 		$keywords = '';
@@ -604,13 +719,16 @@ class SIMPLE_AGLS {
 
 		/* If we have keywords, format for output. */
 		if ( !empty( $keywords ) )
-			$tag = '<meta name="DCTERMS.subject" content="' . esc_attr( strip_tags( $keywords ) ) . '" />' . "\n";
-
-		if (!$return) {
-			echo apply_filters( 'agls_subject', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+			$attributes = array(
+				'name' => 'DCTERMS.subject',
+				'content' => esc_attr( strip_tags( $keywords ) )
+			);
+			
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -623,12 +741,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_audience($show_default = false, $return = false) {
+	public static function agls_audience( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_audience_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$default = get_option( 'agls-audience' );
 
@@ -643,13 +764,16 @@ class SIMPLE_AGLS {
 			$audience = $individual;
 
 		if (!empty($audience))		
-			$tag = '<meta name="DCTERMS.audience" content="' . $audience . '" />' . "\n";
-
-		if ( !$return ) {
-			echo apply_filters( 'agls_audience', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+			$attributes = array(
+				'name' => 'DCTERMS.audience',
+				'content' => $audience
+			);
+			
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -660,12 +784,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_coverage($show_default = false, $return = false) {
+	public static function agls_coverage( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_coverage_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$default = get_option( 'agls-coverage' );
 
@@ -680,13 +807,17 @@ class SIMPLE_AGLS {
 			$coverage = $individual;
 
 		if (!empty($coverage)) 
-			$tag = '<meta name="DCTERMS.coverage" content="' . esc_attr( $coverage ) . '" />' . "\n";
-
-		if ( !$return ) {
-			echo apply_filters( 'agls_coverage', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+			$attributes = array(
+				'name' => 'DCTERMS.coverage',
+				'content' => esc_attr( $coverage )
+			);
+			
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
+		
 	}
 
 	/**
@@ -698,10 +829,13 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_language($show_default = false, $return = false) {
+	public static function agls_language( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_language_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$sitewide = get_option( 'agls-language' );
 
@@ -711,13 +845,16 @@ class SIMPLE_AGLS {
 			$language = $sitewide;
 
 		if (!empty($language)) 
-			$tag = '<meta name="DCTERMS.language" content="' . esc_attr( $language ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'DCTERMS.language',
+				'content' => esc_attr( $language ) 
+			);
 
-		if (!$return) {
-			echo apply_filters( 'agls_language', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -728,12 +865,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_contributor($return = false) {
+	public static function agls_contributor( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_contributor_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$contributor = '';
 
@@ -747,13 +887,16 @@ class SIMPLE_AGLS {
 
 		/* If an author was found, wrap it in the proper HTML and escape the author name. */
 		if ( !empty( $contributor ) )
-			$tag = '<meta name="DCTERMS.contributor" content="' . esc_attr( $contributor ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'DCTERMS.contributor',
+				'content' => esc_attr( $contributor ) 
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_contributor', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -766,18 +909,24 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_format($return = false) {
+	public static function agls_format( $args = array() ) {
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_format_args', $args );
+		extract( $args, EXTR_SKIP );
 
-		$tag = '<meta name="DCTERMS.format" content="' . get_bloginfo( 'html_type' ) . '" />' . "\n";
+		$attributes = array();
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_format', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		$attributes = array(
+			'name' => 'DCTERMS.format',
+			'content' => get_bloginfo( 'html_type' )
+		);
+
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -788,12 +937,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_mandate($show_default = false, $return = false) {
+	public static function agls_mandate( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_mandate_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$default = get_option( 'agls-mandate' );
 
@@ -808,13 +960,16 @@ class SIMPLE_AGLS {
 			$mandate = $individual;
 
 		if (!empty($mandate)) 
-			$tag = '<meta name="AGLSTERMS.mandate" content="' . esc_attr( $mandate ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'AGLSTERMS.mandate',
+				'content' => esc_attr( $mandate )
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_mandate', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -825,23 +980,29 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_relation($return = false) {
+	public static function agls_relation( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_relation_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$relation = get_post_meta( $post->ID, 'DCTERMS.relation', true );
 
 		if (!empty($relation))
-			$tag = '<meta name="DCTERMS.relation" content="' . esc_attr( $relation ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'DCTERMS.relation',
+				'content' => esc_attr( $relation )
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_relation', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -854,11 +1015,14 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_rights($show_default = false, $return = false) {
+	public static function agls_rights( $args = array() ) {
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_rights_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$sitewide = get_option( 'agls-rights' );
 
@@ -881,13 +1045,16 @@ class SIMPLE_AGLS {
 			$rights = $individual;
 
 		if (!empty($rights))
-			$tag = '<meta name="DCTERMS.rights" content="' . esc_attr( $rights ) . '" />' . "\n";	
+			$attributes = array(
+				'name' => 'DCTERMS.rights',
+				'content' => esc_attr( $rights )
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_rights', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
 
@@ -898,24 +1065,60 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_source($return = false) {
+	public static function agls_source( $args = array() ) {
 
 		global $post;
 
-		/*Set blank variable */
-		$tag = '';
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_source_args', $args );
+		extract( $args, EXTR_SKIP );
+
+		$attributes = array();
 
 		$source = get_post_meta( $post->ID, 'DCTERMS.source', true );
 
 		if (!empty($source))
-			$tag = '<meta name="DCTERMS.source" content="' . esc_attr( $source ) . '" />' . "\n";
+			$attributes = array(
+				'name' => 'DCTERMS.source',
+				'content' => esc_attr( $source )
+			);
 
-		if ( !$return ) {
-			echo apply_filters( 'agls_source', $tag );
-		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );	
-		}
+		if ( !$echo && !empty($attributes) )
+			return SIMPLE_AGLS::agls_output( $attributes , $args );
+		
+		if ( !empty($attributes) )
+			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
+	}
+
+	/**
+	 * Format output according to argument
+	 *
+	 * @author Jason Conroy <jason@findingsimple.com>
+	 * @package SIMPLE-AGLS
+	 * @since 1.0
+	 */	
+	public static function agls_output( $attributes = array() , $args = array() ) {
+	
+		$args = wp_parse_args( $args, self::$defaults );
+		$args = apply_filters( 'agls_output_args', $args );
+		extract( $args, EXTR_SKIP );
+	
+		if ($echo && !empty($attributes) ) {
+		
+			$tag = $args['before'] . '<' . $element . ' ';
+            
+            foreach ($attributes as $attribute => $value)
+                $tag .= $attribute . '="' . $value . '" ';
+            
+            $tag .= '/>' . $args['after'];
+            
+            return $tag;
+
+		} 
+		
+		return $attributes;
+	
 	}
 
 }
