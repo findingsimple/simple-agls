@@ -110,11 +110,15 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_comment_start() {
+	public static function agls_comment_start( $return = false ) {
 
 		$tag = '<!-- SIMPLE-AGLS Meta START -->' . "\n";
-
-		echo apply_filters( 'agls_comment_start', $tag );
+		
+		if ( !$return ) {
+			echo apply_filters( 'agls_comment_start', $tag );
+		} else {
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		}
 
 	}
 
@@ -125,12 +129,16 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_comment_end() {
+	public static function agls_comment_end( $return = false ) {
 
 		$tag = '<!-- SIMPLE-AGLS Meta END -->' . "\n";
 
-		echo apply_filters( 'agls_comment_end', $tag );
-
+		if ( !$return ) {
+			echo apply_filters( 'agls_comment_end', $tag );
+		} else {
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		}
+		
 	}
 
 	/**
@@ -140,7 +148,7 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_schema() {
+	public static function agls_schema( $return = false ) {
 
 		/* Set blank variable */
 		$tag = '';
@@ -148,7 +156,11 @@ class SIMPLE_AGLS {
 		$tag .= '<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">' . "\n";
 		$tag .= '<link rel="schema.AGLSTERMS" href="http://www.agls.gov.au/agls/terms/">' . "\n";
 		
-		echo apply_filters( 'agls_schema', $tag );
+		if ( !$return ) {
+			echo apply_filters( 'agls_schema', $tag );
+		} else {
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		}
 
 	}
 
@@ -159,7 +171,7 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_creator() {
+	public static function agls_creator( $return = false ) {
 
 		/*Set blank variable */
 		$tag = '';
@@ -170,8 +182,12 @@ class SIMPLE_AGLS {
 
 		if ( ( !empty($name) ) && ( !empty($address) ) && ( !empty($contact) ) )
 			$tag = '<meta name="DCTERMS.creator" content="CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';" />' . "\n";
-
-		echo apply_filters( 'agls_creator', $tag );
+		
+		if ( !$return ) {
+			echo apply_filters( 'agls_creator', $tag );
+		} else {
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		}
 
 	}
 
@@ -184,7 +200,7 @@ class SIMPLE_AGLS {
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_date() {
+	public static function agls_date( $return = false ) {
 
 		/*Set blank variable */
 		$tag = '';
@@ -198,8 +214,12 @@ class SIMPLE_AGLS {
 				$tag.= '<meta name="DCTERMS.modified" content="' .  get_the_modified_time( esc_attr__( 'c', self::$text_domain ) ) . '"/>' . "\n";
 
 		}
-
-		echo apply_filters( 'agls_date', $tag );
+		
+		if ( !$return ) {
+			echo apply_filters( 'agls_date', $tag );
+		} else {
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
+		}
 
 	}
 
@@ -277,7 +297,7 @@ class SIMPLE_AGLS {
 		if (!$return) {
 			echo apply_filters( 'agls_description', $tag );
 		} else {
-			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( strip_tags( $description ) ) );
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -333,7 +353,7 @@ class SIMPLE_AGLS {
 		if (!$return) {
 			echo apply_filters( 'agls_title', $tag );
 		} else {
-			return $title;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -382,10 +402,10 @@ class SIMPLE_AGLS {
 
 		$tag = '<meta name="DCTERMS.identifier" content="' . $url . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_identifier', $tag );
 		} else {
-			return get_permalink();
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -409,10 +429,10 @@ class SIMPLE_AGLS {
 		if ( !empty( $availability ) )
 			$tag = '<meta name="AGLSTERMS.availability" content="' . $availability . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_availability', $tag );
 		} else {
-			return $availability;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -460,10 +480,10 @@ class SIMPLE_AGLS {
 		if ( ( !empty($publisher ) ) && ( !empty( $default ) ) && ( empty( $individual )) && ( empty( $sitewide ))) 
 			$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_publisher', $tag );
 		} else {
-			return $publisher;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -484,10 +504,10 @@ class SIMPLE_AGLS {
 
 		$tag = '<meta name="DCTERMS.type" content="text" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_type', $tag );
 		} else {
-			return "text";	
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );	
 		}
 
 	}
@@ -524,7 +544,7 @@ class SIMPLE_AGLS {
 		if (!$return) {
 			echo apply_filters( 'agls_function', $tag );
 		} else {
-			return $function;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -589,7 +609,7 @@ class SIMPLE_AGLS {
 		if (!$return) {
 			echo apply_filters( 'agls_subject', $tag );
 		} else {
-			return esc_attr( strip_tags( $keywords ) );
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -625,10 +645,10 @@ class SIMPLE_AGLS {
 		if (!empty($audience))		
 			$tag = '<meta name="DCTERMS.audience" content="' . $audience . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_audience', $tag );
 		} else {
-			return $audience;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -662,10 +682,10 @@ class SIMPLE_AGLS {
 		if (!empty($coverage)) 
 			$tag = '<meta name="DCTERMS.coverage" content="' . esc_attr__( $coverage ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_coverage', $tag );
 		} else {
-			return $coverage;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 	}
 
@@ -696,7 +716,7 @@ class SIMPLE_AGLS {
 		if (!$return) {
 			echo apply_filters( 'agls_language', $tag );
 		} else {
-			return $language;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -729,10 +749,10 @@ class SIMPLE_AGLS {
 		if ( !empty( $contributor ) )
 			$tag = '<meta name="DCTERMS.contributor" content="' . esc_attr( $contributor ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_contributor', $tag );
 		} else {
-			return $contributor;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -753,10 +773,10 @@ class SIMPLE_AGLS {
 
 		$tag = '<meta name="DCTERMS.format" content="' . get_bloginfo( 'html_type' ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_format', $tag );
 		} else {
-			return get_bloginfo( 'html_type' );
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -790,10 +810,10 @@ class SIMPLE_AGLS {
 		if (!empty($mandate)) 
 			$tag = '<meta name="AGLSTERMS.mandate" content="' . esc_attr__( $mandate ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_mandate', $tag );
 		} else {
-			return $mandate;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -817,10 +837,10 @@ class SIMPLE_AGLS {
 		if (!empty($relation))
 			$tag = '<meta name="DCTERMS.relation" content="' . esc_attr__( $relation ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_relation', $tag );
 		} else {
-			return $relation;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -863,10 +883,10 @@ class SIMPLE_AGLS {
 		if (!empty($rights))
 			$tag = '<meta name="DCTERMS.rights" content="' . esc_attr__( $rights ) . '" />' . "\n";	
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_rights', $tag );
 		} else {
-			return $rights;
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );
 		}
 
 	}
@@ -890,10 +910,10 @@ class SIMPLE_AGLS {
 		if (!empty($source))
 			$tag = '<meta name="DCTERMS.source" content="' . esc_attr__( $source ) . '" />' . "\n";
 
-		if (!$return) {
+		if ( !$return ) {
 			echo apply_filters( 'agls_source', $tag );
 		} else {
-			return $source;	
+			return str_replace( array( "\r", "\n", "\t" ), '', esc_attr( $tag ) );	
 		}
 
 	}
