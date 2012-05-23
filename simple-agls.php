@@ -145,7 +145,7 @@ class FS_AGLS {
 		/* Set blank variable */
 		$tag = '';
 
-		$tag = '<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">' . "\n";
+		$tag .= '<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">' . "\n";
 		$tag .= '<link rel="schema.AGLSTERMS" href="http://www.agls.gov.au/agls/terms/">' . "\n";
 		
 		echo apply_filters( 'agls_schema', $tag );
@@ -195,7 +195,7 @@ class FS_AGLS {
 			$tag = '<meta name="DCTERMS.date" content="' .  get_the_date( 'c' ) . '" />' . "\n";
 
 			if ( get_the_modified_time() != get_the_time() ) 
-			$tag.= '<meta name="DCTERMS.modified" content="' .  get_the_modified_time( esc_attr__( 'c', self::$text_domain ) ) . '"/>' . "\n";
+				$tag.= '<meta name="DCTERMS.modified" content="' .  get_the_modified_time( esc_attr__( 'c', self::$text_domain ) ) . '"/>' . "\n";
 
 		}
 
@@ -221,9 +221,8 @@ class FS_AGLS {
 		$description = '';
 
 		/* If viewing the home/posts page, get the site's description. */
-		if ( is_home() ) {
+		if ( is_home() )
 			$description = get_bloginfo( 'description' );
-		}
 
 		/* If viewing a singular post. */
 		elseif ( is_singular() || is_admin() ) {
@@ -457,6 +456,7 @@ class FS_AGLS {
 
 		if ( !empty($publisher ) )
 			$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
+		
 		if ( ( !empty($publisher ) ) && ( !empty( $default ) ) && ( empty( $individual )) && ( empty( $sitewide ))) 
 			$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
 
@@ -726,9 +726,8 @@ class FS_AGLS {
 			$contributor = get_the_author_meta( 'display_name', $post->ID );
 
 		/* If an author was found, wrap it in the proper HTML and escape the author name. */
-		if ( !empty( $contributor ) ) {
+		if ( !empty( $contributor ) )
 			$tag = '<meta name="DCTERMS.contributor" content="' . esc_attr( $contributor ) . '" />' . "\n";
-		}
 
 		if (!$return) {
 			echo apply_filters( 'agls_contributor', $tag );
