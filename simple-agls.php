@@ -2,9 +2,9 @@
 /*
 Plugin Name: Simple AGLS
 Plugin URI: http://plugins.findingsimple.com
-Description: Simple plugin that helps integrate AGLS meta data into you WordPress powered site.
+Description: Simple plugin that helps integrate AGLS meta data into your WordPress powered site.
 Version: 1.0
-Author: Jason Conroy
+Author: Finding Simple
 Author URI: http://findingsimple.com
 License: GPL2
 */
