@@ -42,16 +42,16 @@ if ( ! class_exists( 'FS_AGLS' ) ) {
  * However, it also needs to run early on the init hook.
  *
  * @author Jason Conroy <jason@findingsimple.com>
- * @package WP AGLS
+ * @package SIMPLE-AGLS
  * @since 1.0
  */
-function fs_initialize_wp_agls() {
-	FS_AGLS::init();
+function simple_initialize_wp_agls() {
+	SIMPLE_AGLS::init();
 }
-add_action( 'init', 'fs_initialize_wp_agls', -1 );
+add_action( 'init', 'simple_initialize_wp_agls', -1 );
 
 
-class FS_AGLS {
+class SIMPLE_AGLS {
 
 	static $text_domain;
 
@@ -59,7 +59,7 @@ class FS_AGLS {
 	 * Hook into WordPress where appropriate.
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function init() {
@@ -107,12 +107,12 @@ class FS_AGLS {
 	 * Meta start comment
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_comment_start() {
 
-		$tag = '<!-- WP-AGLS Meta START -->' . "\n";
+		$tag = '<!-- SIMPLE-AGLS Meta START -->' . "\n";
 
 		echo apply_filters( 'agls_comment_start', $tag );
 
@@ -122,12 +122,12 @@ class FS_AGLS {
 	 * Meta end comment
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_comment_end() {
 
-		$tag = '<!-- WP-AGLS Meta END -->' . "\n";
+		$tag = '<!-- SIMPLE-AGLS Meta END -->' . "\n";
 
 		echo apply_filters( 'agls_comment_end', $tag );
 
@@ -137,7 +137,7 @@ class FS_AGLS {
 	 * Specify schema/s used
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_schema() {
@@ -156,7 +156,7 @@ class FS_AGLS {
 	 * Creator term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_creator() {
@@ -181,7 +181,7 @@ class FS_AGLS {
 	 * Auto populates with date create and modified
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_date() {
@@ -207,7 +207,7 @@ class FS_AGLS {
 	 * Description term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_description($show_default = false, $return = false) {
@@ -286,7 +286,7 @@ class FS_AGLS {
 	 * Title term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_title($show_default = false, $return = false) {
@@ -344,7 +344,7 @@ class FS_AGLS {
 	 * Auto populate with the permalink (page url)
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_identifier($return = false) {
@@ -394,7 +394,7 @@ class FS_AGLS {
 	 * Availability term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_availability($return = false) {
@@ -421,7 +421,7 @@ class FS_AGLS {
 	 * Publisher term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_publisher( $show_default = false, $return = false ) {
@@ -474,7 +474,7 @@ class FS_AGLS {
 	 * Auto populate with the default type "text" - all web pages are text
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_type($return = false) {
@@ -496,7 +496,7 @@ class FS_AGLS {
 	 * Function term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_function($show_default = false, $return = false) {
@@ -533,7 +533,7 @@ class FS_AGLS {
 	 * Subject term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_subject($show_default = false, $return = false) {
@@ -600,7 +600,7 @@ class FS_AGLS {
 	 * If no audience set, auto populates with All
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_audience($show_default = false, $return = false) {
@@ -637,7 +637,7 @@ class FS_AGLS {
 	 * Coverage term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_coverage($show_default = false, $return = false) {
@@ -675,7 +675,7 @@ class FS_AGLS {
 	 * Defaults to "en-AU" if not set site-wide
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_language($show_default = false, $return = false) {
@@ -705,7 +705,7 @@ class FS_AGLS {
 	 * Contributor term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_contributor($return = false) {
@@ -743,7 +743,7 @@ class FS_AGLS {
 	 * Auto populate with the doc type
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_format($return = false) {
@@ -765,7 +765,7 @@ class FS_AGLS {
 	 * Mandate term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_mandate($show_default = false, $return = false) {
@@ -802,7 +802,7 @@ class FS_AGLS {
 	 * Relation term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_relation($return = false) {
@@ -831,7 +831,7 @@ class FS_AGLS {
 	 * Auto populate copyright information
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_rights($show_default = false, $return = false) {
@@ -875,7 +875,7 @@ class FS_AGLS {
 	 * Source term
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package WP AGLS
+	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
 	public static function agls_source($return = false) {
