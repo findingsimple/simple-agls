@@ -69,6 +69,9 @@ class FS_AGLS {
 		/* Top */
 		add_action( 'wp_head', __CLASS__ .'::agls_comment_start', 1 ); 
 
+		/* Specify the schema/s used */
+		add_action( 'wp_head', __CLASS__ .'::agls_schema', 1 ); 
+
 		 /* Add mandatory agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_creator', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_date', 1 ); 
@@ -127,6 +130,25 @@ class FS_AGLS {
 		$tag = '<!-- WP-AGLS Meta END -->' . "\n";
 
 		echo apply_filters( 'agls_comment_end', $tag );
+
+	}
+
+	/**
+	 * Specify schema/s used
+	 *
+	 * @author Jason Conroy <jason@findingsimple.com>
+	 * @package WP AGLS
+	 * @since 1.0
+	 */
+	public static function agls_schema() {
+
+		/* Set blank variable */
+		$tag = '';
+
+		$tag = '<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">' . "\n";
+		$tag .= '<link rel="schema.AGLSTERMS" href="http://www.agls.gov.au/agls/terms/">' . "\n";
+		
+		echo apply_filters( 'agls_schema', $tag );
 
 	}
 
