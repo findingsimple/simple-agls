@@ -539,7 +539,7 @@ class SIMPLE_AGLS {
 			$function = $individual;
 
 		if (!empty($function)) 
-			$tag = '<meta name="AGLSTERMS.function" content="' . esc_attr__( $function ) . '" />' . "\n";
+			$tag = '<meta name="AGLSTERMS.function" content="' . esc_attr( $function ) . '" />' . "\n";
 
 		if (!$return) {
 			echo apply_filters( 'agls_function', $tag );
@@ -680,7 +680,7 @@ class SIMPLE_AGLS {
 			$coverage = $individual;
 
 		if (!empty($coverage)) 
-			$tag = '<meta name="DCTERMS.coverage" content="' . esc_attr__( $coverage ) . '" />' . "\n";
+			$tag = '<meta name="DCTERMS.coverage" content="' . esc_attr( $coverage ) . '" />' . "\n";
 
 		if ( !$return ) {
 			echo apply_filters( 'agls_coverage', $tag );
@@ -711,7 +711,7 @@ class SIMPLE_AGLS {
 			$language = $sitewide;
 
 		if (!empty($language)) 
-			$tag = '<meta name="DCTERMS.language" content="' . esc_attr__( $language ) . '" />' . "\n";
+			$tag = '<meta name="DCTERMS.language" content="' . esc_attr( $language ) . '" />' . "\n";
 
 		if (!$return) {
 			echo apply_filters( 'agls_language', $tag );
@@ -808,7 +808,7 @@ class SIMPLE_AGLS {
 			$mandate = $individual;
 
 		if (!empty($mandate)) 
-			$tag = '<meta name="AGLSTERMS.mandate" content="' . esc_attr__( $mandate ) . '" />' . "\n";
+			$tag = '<meta name="AGLSTERMS.mandate" content="' . esc_attr( $mandate ) . '" />' . "\n";
 
 		if ( !$return ) {
 			echo apply_filters( 'agls_mandate', $tag );
@@ -835,7 +835,7 @@ class SIMPLE_AGLS {
 		$relation = get_post_meta( $post->ID, 'DCTERMS.relation', true );
 
 		if (!empty($relation))
-			$tag = '<meta name="DCTERMS.relation" content="' . esc_attr__( $relation ) . '" />' . "\n";
+			$tag = '<meta name="DCTERMS.relation" content="' . esc_attr( $relation ) . '" />' . "\n";
 
 		if ( !$return ) {
 			echo apply_filters( 'agls_relation', $tag );
@@ -881,7 +881,7 @@ class SIMPLE_AGLS {
 			$rights = $individual;
 
 		if (!empty($rights))
-			$tag = '<meta name="DCTERMS.rights" content="' . esc_attr__( $rights ) . '" />' . "\n";	
+			$tag = '<meta name="DCTERMS.rights" content="' . esc_attr( $rights ) . '" />' . "\n";	
 
 		if ( !$return ) {
 			echo apply_filters( 'agls_rights', $tag );
@@ -908,7 +908,7 @@ class SIMPLE_AGLS {
 		$source = get_post_meta( $post->ID, 'DCTERMS.source', true );
 
 		if (!empty($source))
-			$tag = '<meta name="DCTERMS.source" content="' . esc_attr__( $source ) . '" />' . "\n";
+			$tag = '<meta name="DCTERMS.source" content="' . esc_attr( $source ) . '" />' . "\n";
 
 		if ( !$return ) {
 			echo apply_filters( 'agls_source', $tag );
