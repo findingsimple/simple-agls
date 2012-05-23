@@ -34,7 +34,7 @@ License: GPL2
 
 require_once dirname( __FILE__ ) . '/simple-agls-admin.php';
 
-if ( ! class_exists( 'FS_AGLS' ) ) {
+if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 
 /**
  * So that themes and other plugins can customise the text domain, the FS_AGLS should

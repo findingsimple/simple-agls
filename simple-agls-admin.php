@@ -2,10 +2,10 @@
 
 /* Settings for schema selection/setting site-wide */
 
-if ( ! class_exists( 'FS_AGLS_Admin' ) ) {
+if ( ! class_exists( 'SIMPLE_AGLS_Admin' ) ) {
 
 /**
- * So that themes and other plugins can customise the text domain, the FS_AGLS_Admin should
+ * So that themes and other plugins can customise the text domain, the SIMPLE_AGLS_Admin should
  * not be initialized until after the plugins_loaded and after_setup_theme hooks.
  * However, it also needs to run early on the init hook.
  *
@@ -13,18 +13,18 @@ if ( ! class_exists( 'FS_AGLS_Admin' ) ) {
  * @package WP AGLS
  * @since 1.0
  */
-function fs_initialize_wp_agls_admin() {
-	FS_AGLS_Admin::init();
+function simple_initialize_agls_admin() {
+	SIMPLE_AGLS_Admin::init();
 }
-add_action( 'init', 'fs_initialize_wp_agls_admin', -1 );
+add_action( 'init', 'simple_initialize_agls_admin', -1 );
 
 
-class FS_AGLS_Admin {
+class SIMPLE_AGLS_Admin {
 
 	public static function init() {  
 
 		/* create custom plugin settings menu */
-		add_action( 'admin_menu',  __CLASS__ . '::wpagls_create_menu' );
+		add_action( 'admin_menu',  __CLASS__ . '::simple_agls_create_menu' );
 
 		/* Add the post AGLS meta box on the 'add_meta_boxes' hook. */
 		add_action( 'add_meta_boxes', __CLASS__ . '::add_agls_meta_box' );
@@ -34,10 +34,10 @@ class FS_AGLS_Admin {
 
 	}
 
-	public static function wpagls_create_menu() {
+	public static function simple_agls_create_menu() {
 
 		//create new top-level menu
-		add_options_page( 'AGLS Settings', 'AGLS', 'administrator', 'simple_agls', __CLASS__ . '::wpagls_settings_page' );
+		add_options_page( 'AGLS Settings', 'AGLS', 'administrator', 'simple_agls', __CLASS__ . '::simple_agls_settings_page' );
 
 		//call register settings function
 		add_action( 'admin_init',  __CLASS__ . '::register_mysettings' );
@@ -47,107 +47,107 @@ class FS_AGLS_Admin {
 
 	public static function register_mysettings() {
 	
-		$page = 'wpagls-settings'; 
+		$page = 'simple_agls-settings'; 
 
 		//general settings
 		add_settings_section( 
-			'wpagls-general', 
+			'simple_agls-general', 
 			'General Settings',
-			__CLASS__ . '::wpagls_general_callback',
+			__CLASS__ . '::simple_agls_general_callback',
 			$page
 		);
 
 		add_settings_field(
-			'wpagls-toggle-show-schema',
+			'simple_agls-toggle-show-schema',
 			'Toggle Schema Attribute',
-			__CLASS__ . '::wpagls_toggle_show_schema_callback',
+			__CLASS__ . '::simple_agls_toggle_show_schema_callback',
 			$page,
-			'wpagls-general'
+			'simple_agls-general'
 		);
 
 		//site-wide settings
 		add_settings_section( 
-			'wpagls-site-wide', 
+			'simple_agls-site-wide', 
 			'Site-wide Values',
-			__CLASS__ . '::wpagls_site_wide_callback',
+			__CLASS__ . '::simple_agls_site_wide_callback',
 			$page
 		);
 
 		add_settings_field(
 			'agls-creator-corporate-name', 
 			'Creator corporate name',
-			__CLASS__ . '::wpagls_site_wide_corporate_name_callback',
+			__CLASS__ . '::simple_agls_site_wide_corporate_name_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-creator-address',
 			'Creator corporate address',
-			__CLASS__ . '::wpagls_site_wide_corporate_address_callback',
+			__CLASS__ . '::simple_agls_site_wide_corporate_address_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-creator-contact',
 			'Creator corporate contact',
-			__CLASS__ . '::wpagls_site_wide_corporate_contact_callback',
+			__CLASS__ . '::simple_agls_site_wide_corporate_contact_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-function',
 			'Function value',
-			__CLASS__ . '::wpagls_site_wide_function_callback',
+			__CLASS__ . '::simple_agls_site_wide_function_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-audience',
 			'Audience value',
-			__CLASS__ . '::wpagls_site_wide_audience_callback',
+			__CLASS__ . '::simple_agls_site_wide_audience_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-coverage',
 			'Coverage value',
-			__CLASS__ . '::wpagls_site_wide_coverage_callback',
+			__CLASS__ . '::simple_agls_site_wide_coverage_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-language',
 			'Language value',
-			__CLASS__ . '::wpagls_site_wide_language_callback',
+			__CLASS__ . '::simple_agls_site_wide_language_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-mandate',
 			'Mandate value',
-			__CLASS__ . '::wpagls_site_wide_mandate_callback',
+			__CLASS__ . '::simple_agls_site_wide_mandate_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 
 		add_settings_field(
 			'agls-rights',
 			'Rights value',
-			__CLASS__ . '::wpagls_site_wide_rights_callback',
+			__CLASS__ . '::simple_agls_site_wide_rights_callback',
 			$page,
-			'wpagls-site-wide'
+			'simple_agls-site-wide'
 		);
 		
 		//register our settings
 		
-		register_setting( $page, 'wpagls-toggle-show-schema' );
+		register_setting( $page, 'simple_agls-toggle-show-schema' );
 
 		register_setting( $page, 'agls-creator-corporate-name' );
 		register_setting( $page, 'agls-creator-address' );
@@ -162,9 +162,9 @@ class FS_AGLS_Admin {
 
 	}
 
-	public static function wpagls_settings_page() {
+	public static function simple_agls_settings_page() {
 	
-		$page = 'wpagls-settings'; 
+		$page = 'simple_agls-settings'; 
 	
 	?>
 	<div class="wrap">
@@ -190,73 +190,73 @@ class FS_AGLS_Admin {
 	<?php 
 	} 
 
-	public static function wpagls_general_callback() {
+	public static function simple_agls_general_callback() {
 		
 		//do nothing
 		
 	}
 	
-	public static function wpagls_toggle_show_schema_callback() {
+	public static function simple_agls_toggle_show_schema_callback() {
 	
-		echo '<input name="wpagls-toggle-show-schema" id="wpagls-toggle-show-schema" type="checkbox" value="1" class="code" ' . checked( 1, get_option('wpagls-toggle-show-schema'), false ) . ' /> Show schema';
+		echo '<input name="simple_agls-toggle-show-schema" id="simple_agls-toggle-show-schema" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-show-schema'), false ) . ' /> Show schema';
 		
 	}
 	
-	public static function wpagls_site_wide_corporate_name_callback() {
+	public static function simple_agls_site_wide_corporate_name_callback() {
 	
 		echo '<input name="agls-creator-corporate-name" type="text" id="agls-creator-corporate-name" class="regular-text" value="'. esc_attr( get_option('agls-creator-corporate-name') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_corporate_address_callback() {
+	public static function simple_agls_site_wide_corporate_address_callback() {
 	
 		echo '<input name="agls-creator-address" type="text" id="agls-creator-address" class="regular-text" value="'. esc_attr( get_option('agls-creator-address') ) . '" />';
 	
 	}
 	
-	public static function wpagls_site_wide_corporate_contact_callback() {
+	public static function simple_agls_site_wide_corporate_contact_callback() {
 	
 		echo '<input name="agls-creator-contact" type="text" id="agls-creator-contact" class="regular-text" value="'. esc_attr( get_option('agls-creator-contact') ) . '" />';
 		
 	}
 
-	public static function wpagls_site_wide_function_callback() {
+	public static function simple_agls_site_wide_function_callback() {
 	
 		echo '<input name="agls-function" type="text" id="agls-function" class="regular-text" value="'. esc_attr( get_option('agls-function') ) . '" />';
 		
 	}
 
-	public static function wpagls_site_wide_audience_callback() {
+	public static function simple_agls_site_wide_audience_callback() {
 	
 		echo '<input name="agls-audience" type="text" id="agls-audience" class="regular-text" value="'. esc_attr( get_option('agls-audience') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_coverage_callback() {
+	public static function simple_agls_site_wide_coverage_callback() {
 	
 		echo '<input name="agls-coverage" type="text" id="agls-coverage" class="regular-text" value="'. esc_attr( get_option('agls-coverage') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_language_callback() {
+	public static function simple_agls_site_wide_language_callback() {
 	
 		echo '<input name="agls-language" type="text" id="agls-language" class="regular-text" value="'. esc_attr( get_option('agls-language') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_mandate_callback() {
+	public static function simple_agls_site_wide_mandate_callback() {
 	
 		echo '<input name="agls-mandate" type="text" id="agls-mandate" class="regular-text" value="'. esc_attr( get_option('agls-mandate') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_rights_callback() {
+	public static function simple_agls_site_wide_rights_callback() {
 	
 		echo '<input name="agls-rights" type="text" id="agls-rights" class="regular-text" value="'. esc_attr( get_option('agls-rights') ) . '"  />';
 		
 	}
 	
-	public static function wpagls_site_wide_callback() {
+	public static function simple_agls_site_wide_callback() {
 		
 		//do nothing
 		
@@ -274,7 +274,7 @@ class FS_AGLS_Admin {
 
 		/* Loop through each post type, adding the meta box for each type's post editor screen. */
 		foreach ( $post_types as $type )
-			add_meta_box( 'agls-meta-data', sprintf( __( 'AGLS Metadata', FS_AGLS::$text_domain ), $type->labels->singular_name ), __CLASS__ . '::agls_meta_box_display', $type->name, 'normal', 'high' );
+			add_meta_box( 'agls-meta-data', sprintf( __( 'AGLS Metadata', SIMPLE_AGLS::$text_domain ), $type->labels->singular_name ), __CLASS__ . '::agls_meta_box_display', $type->name, 'normal', 'high' );
 	}
 
 	/**
@@ -289,91 +289,91 @@ class FS_AGLS_Admin {
 		<div class="post-settings">
 
 		<p>
-			<label for="agls-title"><?php _e( 'Title:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-title"><?php _e( 'Title:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-title" id="agls-title" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.title', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_title( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_title( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-description"><?php _e( 'Description:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-description"><?php _e( 'Description:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<textarea name="agls-description" id="agls-description" cols="60" rows="2" tabindex="30" style="width: 99%;"><?php echo esc_textarea( get_post_meta( $object->ID, 'DCTERMS.description', true ) ); ?></textarea>
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_description( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_description( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-subject"><?php _e( 'Subject:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-subject"><?php _e( 'Subject:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-subject" id="agls-subject" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.subject', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_subject( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_subject( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-publisher"><?php _e( 'Publisher:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-publisher"><?php _e( 'Publisher:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-publisher" id="agls-publisher" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.publisher', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_publisher( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_publisher( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-availability"><?php _e( 'Availability:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-availability"><?php _e( 'Availability:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-availability" id="agls-availability" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.availability', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 		</p>
 
 		<p>
-			<label for="agls-function"><?php _e( 'Function:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-function"><?php _e( 'Function:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-function" id="agls-function" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.function', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_function( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_function( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-mandate"><?php _e( 'Mandate:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-mandate"><?php _e( 'Mandate:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-mandate" id="agls-mandate" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.mandate', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_mandate( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_mandate( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-audience"><?php _e( 'Audience:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-audience"><?php _e( 'Audience:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-audience" id="agls-audience" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.audience', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_audience( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_audience( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-coverage"><?php _e( 'Coverage:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-coverage"><?php _e( 'Coverage:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-coverage" id="agls-coverage" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.coverage', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_coverage( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_coverage( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-relation"><?php _e( 'Relation:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-relation"><?php _e( 'Relation:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-relation" id="agls-relation" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.relation', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 		</p>
 
 		<p>
-			<label for="agls-rights"><?php _e( 'Rights:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-rights"><?php _e( 'Rights:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-rights" id="agls-rights" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.rights', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 			<br />
-			<span style="color:#aaa;">Default: <?php echo FS_AGLS::agls_rights( true , true ); ?></span>
+			<span style="color:#aaa;">Default: <?php echo SIMPLE_AGLS::agls_rights( true , true ); ?></span>
 		</p>
 
 		<p>
-			<label for="agls-source"><?php _e( 'Source:', FS_AGLS::$text_domain ); ?></label>
+			<label for="agls-source"><?php _e( 'Source:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-source" id="agls-source" value="<?php echo esc_attr( get_post_meta( $object->ID, 'DCTERMS.source', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
 		</p>
