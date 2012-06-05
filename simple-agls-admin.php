@@ -70,6 +70,14 @@ class SIMPLE_AGLS_Admin {
 			$page,
 			'simple_agls-namespace'
 		);
+		
+		add_settings_field(
+			'simple_agls-toggle-scheme-attribute',
+			'Toggle Scheme Attribute',
+			__CLASS__ . '::simple_agls_toggle_scheme_attribute_callback',
+			$page,
+			'simple_agls-namespace'
+		);
 
 		//site-wide settings
 		add_settings_section( 
@@ -155,6 +163,7 @@ class SIMPLE_AGLS_Admin {
 		
 		register_setting( $page, 'simple_agls-toggle-dublin-core-namespace' );
 		register_setting( $page, 'simple_agls-toggle-agls-namespace' );
+		register_setting( $page, 'simple_agls-toggle-scheme-attribute' );
 
 		register_setting( $page, 'agls-creator-corporate-name' );
 		register_setting( $page, 'agls-creator-address' );
@@ -212,6 +221,12 @@ class SIMPLE_AGLS_Admin {
 	public static function simple_agls_toggle_agls_namespace_callback() {
 	
 		echo '<input name="simple_agls-toggle-agls-namespace" id="simple_agls-toggle-agls-namespace" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-agls-namespace'), false ) . ' /> Show AGLS namespace';
+		
+	}
+	
+	public static function simple_agls_toggle_scheme_attribute_callback() {
+	
+		echo '<input name="simple_agls-toggle-scheme-attribute" id="simple_agls-toggle-scheme-attribute" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-scheme-attribute'), false ) . ' /> Show scheme attribute for individual meta tags';
 		
 	}
 	
