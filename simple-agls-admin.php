@@ -49,18 +49,26 @@ class SIMPLE_AGLS_Admin {
 
 		//general settings
 		add_settings_section( 
-			'simple_agls-general', 
-			'General Settings',
-			__CLASS__ . '::simple_agls_general_callback',
+			'simple_agls-namespace', 
+			'Namespace Settings',
+			__CLASS__ . '::simple_agls_namespace_callback',
 			$page
 		);
 
 		add_settings_field(
-			'simple_agls-toggle-show-schema',
-			'Toggle Schema Attribute',
-			__CLASS__ . '::simple_agls_toggle_show_schema_callback',
+			'simple_agls-toggle-dublin-core-namespace',
+			'Toggle Dublin Core Namespace',
+			__CLASS__ . '::simple_agls_toggle_dublin_core_namespace_callback',
 			$page,
-			'simple_agls-general'
+			'simple_agls-namespace'
+		);
+
+		add_settings_field(
+			'simple_agls-toggle-agls-namespace',
+			'Toggle AGLS Namespace',
+			__CLASS__ . '::simple_agls_toggle_agls_namespace_callback',
+			$page,
+			'simple_agls-namespace'
 		);
 
 		//site-wide settings
@@ -145,7 +153,8 @@ class SIMPLE_AGLS_Admin {
 		
 		//register our settings
 		
-		register_setting( $page, 'simple_agls-toggle-show-schema' );
+		register_setting( $page, 'simple_agls-toggle-dublin-core-namespace' );
+		register_setting( $page, 'simple_agls-toggle-agls-namespace' );
 
 		register_setting( $page, 'agls-creator-corporate-name' );
 		register_setting( $page, 'agls-creator-address' );
@@ -188,15 +197,21 @@ class SIMPLE_AGLS_Admin {
 	<?php 
 	} 
 
-	public static function simple_agls_general_callback() {
+	public static function simple_agls_namespace_callback() {
 		
 		//do nothing
 		
 	}
 	
-	public static function simple_agls_toggle_show_schema_callback() {
+	public static function simple_agls_toggle_dublin_core_namespace_callback() {
 	
-		echo '<input name="simple_agls-toggle-show-schema" id="simple_agls-toggle-show-schema" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-show-schema'), false ) . ' /> Show schema';
+		echo '<input name="simple_agls-toggle-dublin-core-namespace" id="simple_agls-toggle-dublin-core-namespace" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-dublin-core-namespace'), false ) . ' /> Show Dublin Core namespace';
+		
+	}
+	
+	public static function simple_agls_toggle_agls_namespace_callback() {
+	
+		echo '<input name="simple_agls-toggle-agls-namespace" id="simple_agls-toggle-agls-namespace" type="checkbox" value="1" class="code" ' . checked( 1, get_option('simple_agls-toggle-agls-namespace'), false ) . ' /> Show AGLS namespace';
 		
 	}
 	

@@ -80,7 +80,7 @@ class SIMPLE_AGLS {
 		add_action( 'wp_head', __CLASS__ .'::agls_comment_start', 1 ); 
 
 		/* Specify the schema/s used */
-		add_action( 'wp_head', __CLASS__ .'::agls_schema', 1 ); 
+		add_action( 'wp_head', __CLASS__ .'::agls_namespace', 1 ); 
 
 		 /* Add mandatory agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_creator', 1 ); 
@@ -154,17 +154,17 @@ class SIMPLE_AGLS {
 	}
 
 	/**
-	 * Specify schema/s used
+	 * Specify namespace/s used
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
 	 */
-	public static function agls_schema( $args = array() ) {
+	public static function agls_namespace( $args = array() ) {
 
 		$args['element'] = 'link';
 		$args = wp_parse_args( $args, self::$defaults );
-		$args = apply_filters( 'agls_schema_args', $args );
+		$args = apply_filters( 'agls_namespace_args', $args );
 		extract( $args, EXTR_SKIP );
 		
 		$attributes = array(
@@ -172,21 +172,15 @@ class SIMPLE_AGLS {
 			'href' => 'http://purl.org/dc/terms/'
 		);
 		
-		if ( !$echo && !empty($attributes) )
-			return SIMPLE_AGLS::agls_output( $attributes , $args );
-		
-		if ( !empty($attributes) )
+		if ( !empty($attributes) && (get_option('simple_agls-toggle-dublin-core-namespace') == 1) )
 			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 		$attributes = array(
 			'rel' => 'schema.AGLSTERMS',
 			'href' => 'http://www.agls.gov.au/agls/terms/'
 		);
-
-		if ( !$echo && !empty($attributes) )
-			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
-		if ( !empty($attributes) )
+		if ( !empty($attributes) && (get_option('simple_agls-toggle-agls-namespace') == 1) )
 			echo SIMPLE_AGLS::agls_output( $attributes , $args );
 
 	}
