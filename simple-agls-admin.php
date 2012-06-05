@@ -1,7 +1,5 @@
 <?php
 
-/* Settings for schema selection/setting site-wide */
-
 if ( ! class_exists( 'SIMPLE_AGLS_Admin' ) ) {
 
 /**
