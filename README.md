@@ -1,7 +1,7 @@
 === WP-AGLS ===
 Contributors: findingsimple
 Donate link: http://findingsimple.com/
-Tags: agls, meta data
+Tags: agls, meta
 Requires at least: 3.1
 Tested up to: 3.2.1
 Stable tag: 1.0
