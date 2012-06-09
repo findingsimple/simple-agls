@@ -1,42 +1,38 @@
-=== WP-AGLS ===
-Contributors: findingsimple
-Donate link: http://findingsimple.com/
-Tags: agls, meta
+# Simple AGLS
+
+Website: [Finding Simple](http://findingsimple.com/)
+
+Contributors: Finding Simple
+
+Tags: agls, dublin core, meta, open gov
+
 Requires at least: 3.1
+
 Tested up to: 3.2.1
+
 Stable tag: 1.0
 
-== Description ==
+## Description
 
-Simple plugin that helps integrate AGLS meta data into you WordPress powered site.
+Simple plugin that helps integrate add AGLS meta tags into you WordPress powered site.
 
-Links: [Author's Site](http://findingsimple.com/)
-
-== Installation ==
+## Installation
 
 The plugin can be installed in 3 easy steps:
 
-1. Unzip "WP-AGLS" archive and put the folder into your plugins folder (/wp-content/plugins/).
+1. Unzip the "simple-agls" archive and put the folder into your plugins folder (/wp-content/plugins/).
 2. Activate the plugin from the Plugins menu.
-3. Set AGLS fields on your pages, posts and custom post types.
+3. Set fields on your pages, posts and custom post types.
 
-== Frequently Asked Questions ==
-
-Coming Soon
-
-== Screenshots ==
+## Frequently Asked Questions
 
 Coming Soon
 
-== Changelog ==
+## Screenshots
 
-= 1.0 =
-* initial release
+Coming Soon
 
-== To-do's & Ideas ==
-* Schema enable/disable
-* Add meta box/s to all post types
-* Add options page/tab that allows enabling / disabling various meta data
-* Add options for auto populating
-* Custom Meta Fields for categories and tags?
+## Changelog
+
+* 1.0 - initial release
 
