@@ -291,7 +291,7 @@ class SIMPLE_AGLS_Admin {
 	}
 
 	/**
-	 * Adds the post SEO meta box for all public post types.
+	 * Adds the post AGLS meta box for all public post types.
 	 *
 	 * @since 1.2.0
 	 */
@@ -316,7 +316,7 @@ class SIMPLE_AGLS_Admin {
 			'echo' => false
 		); ?>
 
-		<input type="hidden" name="eeo-agls-meta-box-seo" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />
+		<input type="hidden" name="simple-agls-meta-box-nonce" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />
 
 		<div class="post-settings">
 
@@ -420,7 +420,7 @@ class SIMPLE_AGLS_Admin {
 	public static function save_agls_meta_box( $post_id, $post ) {
 
 		/* Verify the nonce before proceeding. */
-		if ( !isset( $_POST['eeo-agls-meta-box-seo'] ) || !wp_verify_nonce( $_POST['eeo-agls-meta-box-seo'], basename( __FILE__ ) ) )
+		if ( !isset( $_POST['simple-agls-meta-box-nonce'] ) || !wp_verify_nonce( $_POST['simple-agls-meta-box-nonce'], basename( __FILE__ ) ) )
 			return $post_id;
 
 		/* Get the post type object. */
