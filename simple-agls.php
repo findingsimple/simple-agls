@@ -210,6 +210,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.creator',
 				'content' => 'CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';'
 			);
+			
+			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+				$attributes['scheme'] = ' ';
+			}
 		
 		}
 
@@ -244,6 +248,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.date',
 				'content' => get_the_date( 'c' )
 			);
+			
+			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+				$attributes['scheme'] = ' ';
+			}
 
 		}
 		
@@ -278,6 +286,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.modified',
 				'content' => get_the_modified_time( 'c' )
 			);
+			
+			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+				$attributes['scheme'] = ' ';
+			}
 
 		}
 		
@@ -363,6 +375,10 @@ class SIMPLE_AGLS {
 				'content' => str_replace( array( "\r", "\n", "\t" ), '', esc_attr( strip_tags( $description ) ) )
 			);
 		
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
+		
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
@@ -424,6 +440,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.title',
 				'content' => esc_attr( $title )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -482,6 +502,10 @@ class SIMPLE_AGLS {
 			'name' => 'DCTERMS.identifier',
 			'content' => $url
 		);
+		
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -515,6 +539,10 @@ class SIMPLE_AGLS {
 				'name' => 'AGLSTERMS.availability',
 				'content' => $availability
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -573,6 +601,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.publisher',
 				'content' => $publisher
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -603,6 +635,10 @@ class SIMPLE_AGLS {
 			'name' => 'DCTERMS.type',
 			'content' => 'text'
 		);
+		
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -646,6 +682,10 @@ class SIMPLE_AGLS {
 				'name' => 'AGLSTERMS.function',
 				'content' => esc_attr( $function )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -718,6 +758,10 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( strip_tags( $keywords ) )
 			);
 			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
+			
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
@@ -763,6 +807,10 @@ class SIMPLE_AGLS {
 				'content' => $audience
 			);
 			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
+			
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
@@ -806,6 +854,10 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $coverage )
 			);
 			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
+			
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
@@ -843,6 +895,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.language',
 				'content' => esc_attr( $language ) 
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -886,6 +942,11 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $contributor ) 
 			);
 
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
+
+
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
@@ -915,6 +976,10 @@ class SIMPLE_AGLS {
 			'name' => 'DCTERMS.format',
 			'content' => get_bloginfo( 'html_type' )
 		);
+		
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -958,6 +1023,10 @@ class SIMPLE_AGLS {
 				'name' => 'AGLSTERMS.mandate',
 				'content' => esc_attr( $mandate )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -991,6 +1060,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.relation',
 				'content' => esc_attr( $relation )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -1043,6 +1116,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.rights',
 				'content' => esc_attr( $rights )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
@@ -1076,6 +1153,10 @@ class SIMPLE_AGLS {
 				'name' => 'DCTERMS.source',
 				'content' => esc_attr( $source )
 			);
+			
+		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			$attributes['scheme'] = ' ';
+		}
 
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
