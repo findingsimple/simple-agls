@@ -185,7 +185,7 @@ class SIMPLE_AGLS_Admin {
 	?>
 	<div class="wrap">
 	
-		<h2>WP-AGLS Settings</h2>
+		<div id="icon-options-general" class="icon32"><br /></div><h2>SIMPLE-AGLS Settings</h2>
 		
 		<?php settings_errors(); ?>
 	
