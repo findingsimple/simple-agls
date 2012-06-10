@@ -14,7 +14,7 @@ Stable tag: 1.0
 
 ## Description
 
-Simple plugin that helps integrate add AGLS meta tags into you WordPress powered site.
+Simple plugin that helps integrate AGLS meta tags into your WordPress powered site.
 
 ## Installation
 
