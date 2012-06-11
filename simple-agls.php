@@ -212,7 +212,7 @@ class SIMPLE_AGLS {
 			);
 			
 			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
-				$attributes['scheme'] = ' ';
+				$attributes['scheme'] = 'AGLSTERMS.AglsAgent';
 			}
 		
 		}
