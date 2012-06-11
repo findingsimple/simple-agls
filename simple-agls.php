@@ -622,7 +622,9 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
+			
 			$attributes['scheme'] = 'AGLSTERMS.AglsAgent';
+		
 		}
 
 		if ( !$echo && !empty($attributes) )
