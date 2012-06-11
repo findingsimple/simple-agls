@@ -91,7 +91,7 @@ class SIMPLE_AGLS {
 		add_action( 'wp_head', __CLASS__ .'::agls_publisher', 1 ); /* Mandatory for information resources */
 		add_action( 'wp_head', __CLASS__ .'::agls_type', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_function', 1 ); /* Recommended if subject is not used */
-		add_action( 'wp_head', __CLASS__ .'::agls_subject', 1 );
+		add_action( 'wp_head', __CLASS__ .'::agls_subject', 1 ); /* Recommended if function is not used. */
 
 		/* Add conditional agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_availability', 1 );
