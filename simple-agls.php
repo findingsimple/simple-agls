@@ -1208,8 +1208,12 @@ class SIMPLE_AGLS {
 		
 			$tag = $args['before'] . '<' . $element . ' ';
             
-            foreach ($attributes as $attribute => $value)
-                $tag .= $attribute . '="' . $value . '" ';
+            foreach ($attributes as $attribute => $value) {
+            	
+            	if ( !empty( $value ) ) 
+                	$tag .= $attribute . '="' . $value . '" ';
+            
+            }
             
             $tag .= '/>' . $args['after'];
             
