@@ -375,10 +375,6 @@ class SIMPLE_AGLS {
 				'content' => str_replace( array( "\r", "\n", "\t" ), '', esc_attr( strip_tags( $description ) ) )
 			);
 		
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
-			$attributes['scheme'] = ' ';
-		}
-		
 		if ( !$echo && !empty($attributes) )
 			return SIMPLE_AGLS::agls_output( $attributes , $args );
 		
