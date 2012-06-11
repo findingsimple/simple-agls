@@ -85,12 +85,12 @@ class SIMPLE_AGLS {
 		/* Add mandatory agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_creator', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_date', 1 ); 
-		add_action( 'wp_head', __CLASS__ .'::agls_description', 1 ); 
+		add_action( 'wp_head', __CLASS__ .'::agls_description', 1 ); /* Recommended */
 		add_action( 'wp_head', __CLASS__ .'::agls_title', 1 );
-		add_action( 'wp_head', __CLASS__ .'::agls_identifier', 1 ); 
-		add_action( 'wp_head', __CLASS__ .'::agls_publisher', 1 ); 
+		add_action( 'wp_head', __CLASS__ .'::agls_identifier', 1 ); /* Mandatory for online resources */
+		add_action( 'wp_head', __CLASS__ .'::agls_publisher', 1 ); /* Mandatory for information resources */
 		add_action( 'wp_head', __CLASS__ .'::agls_type', 1 ); 
-		add_action( 'wp_head', __CLASS__ .'::agls_function', 1 );
+		add_action( 'wp_head', __CLASS__ .'::agls_function', 1 ); /* Recommended if subject is not used */
 		add_action( 'wp_head', __CLASS__ .'::agls_subject', 1 );
 
 		/* Add conditional agls <meta> elements to the <head> area. */
@@ -701,9 +701,13 @@ class SIMPLE_AGLS {
 				'name' => 'AGLSTERMS.function',
 				'content' => esc_attr( $function )
 			);
-			
+		
+		/* Government agencies may use the Australian Governments’ Interactive Functions 
+		Thesaurus (AGIFT) as a source of function terms and a Vocabulary Encoding 
+		Scheme. */
+		
 		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -916,7 +920,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = 'DCTERMS.RFC4646';
 		}
 
 		if ( !$echo && !empty($attributes) )
