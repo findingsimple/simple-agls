@@ -1050,7 +1050,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -1087,7 +1087,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -1143,7 +1143,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -1180,7 +1180,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 
 		if ( !$echo && !empty($attributes) )
