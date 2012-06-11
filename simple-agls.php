@@ -211,7 +211,7 @@ class SIMPLE_AGLS {
 				'content' => 'CorporateName=' . $name . '; address=' . $address . '; contact=' . $contact . ';'
 			);
 			
-			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 				$attributes['scheme'] = 'AGLSTERMS.AglsAgent';
 			}
 		
@@ -249,7 +249,7 @@ class SIMPLE_AGLS {
 				'content' => get_the_date( 'c' )
 			);
 			
-			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 				$attributes['scheme'] = 'DCTERMS.ISO8601';
 			}
 
@@ -287,7 +287,7 @@ class SIMPLE_AGLS {
 				'content' => get_the_modified_time( 'c' )
 			);
 			
-			if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+			if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 				$attributes['scheme'] = 'DCTERMS.ISO8601';
 			}
 
@@ -496,7 +496,7 @@ class SIMPLE_AGLS {
 				'content' => $url
 			);
 		
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = 'DCTERMS.URI';
 		}
 
@@ -559,7 +559,7 @@ class SIMPLE_AGLS {
 				'content' => $url
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = 'DCTERMS.URI';
 		}
 
@@ -621,7 +621,7 @@ class SIMPLE_AGLS {
 				'content' => $publisher
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = 'AGLSTERMS.AglsAgent';
 		}
 
@@ -655,7 +655,7 @@ class SIMPLE_AGLS {
 			'content' => 'text'
 		);
 		
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -706,7 +706,7 @@ class SIMPLE_AGLS {
 		Thesaurus (AGIFT) as a source of function terms and a Vocabulary Encoding 
 		Scheme. */
 		
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = '';
 		}
 
@@ -781,7 +781,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( strip_tags( $keywords ) )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes )  ) {
 			$attributes['scheme'] = 'AGLSTERMS.TAGS';
 		}
 			
@@ -830,7 +830,7 @@ class SIMPLE_AGLS {
 				'content' => $audience
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 			
@@ -877,7 +877,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $coverage )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 			
@@ -919,7 +919,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $language ) 
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = 'DCTERMS.RFC4646';
 		}
 
@@ -965,7 +965,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $contributor ) 
 			);
 
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -1000,7 +1000,7 @@ class SIMPLE_AGLS {
 			'content' => get_bloginfo( 'html_type' )
 		);
 		
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -1047,7 +1047,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $mandate )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -1084,7 +1084,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $relation )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -1140,7 +1140,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $rights )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
@@ -1177,7 +1177,7 @@ class SIMPLE_AGLS {
 				'content' => esc_attr( $source )
 			);
 			
-		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
+		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = ' ';
 		}
 
