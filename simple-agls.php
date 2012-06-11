@@ -655,8 +655,10 @@ class SIMPLE_AGLS {
 			'content' => 'text'
 		);
 		
+		/* http://www.agls.gov.au/documents/agls-document/ contains list of preferred types */
+		
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = 'AGLSTERMS.documentType';
 		}
 
 		if ( !$echo && !empty($attributes) )
