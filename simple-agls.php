@@ -82,24 +82,24 @@ class SIMPLE_AGLS {
 		/* Specify the schema/s used */
 		add_action( 'wp_head', __CLASS__ .'::agls_namespace', 1 ); 
 
-		 /* Add mandatory agls <meta> elements to the <head> area. */
+		/* Add mandatory agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_creator', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_date', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_description', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_title', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_identifier', 1 ); 
-		add_action( 'wp_head', __CLASS__ .'::agls_availability', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_publisher', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_type', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_function', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_subject', 1 );
 
-		 /* Add conditional agls <meta> elements to the <head> area. */
+		/* Add conditional agls <meta> elements to the <head> area. */
+		add_action( 'wp_head', __CLASS__ .'::agls_availability', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_audience', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_coverage', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_language', 1 );
 
-		 /* Add optional agls <meta> elements to the <head> area. */
+		/* Add optional agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_contributor', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_format', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_mandate', 1 ); 
@@ -493,11 +493,12 @@ class SIMPLE_AGLS {
 		} else {
 			$url = '';
 		}
-
-		$attributes = array(
-			'name' => 'DCTERMS.identifier',
-			'content' => $url
-		);
+		
+		if ( !empty( $url ) )
+			$attributes = array(
+				'name' => 'DCTERMS.identifier',
+				'content' => $url
+			);
 		
 		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
 			$attributes['scheme'] = 'DCTERMS.URI';
@@ -527,17 +528,43 @@ class SIMPLE_AGLS {
 		extract( $args, EXTR_SKIP );
 
 		$attributes = array();
+		
+		if (is_singular()) {
+			$url = get_permalink();
+		} else if(is_search()) {
+			$search = get_query_var('s');
+			$url = get_bloginfo('url') . "/search/". $search;
+		} else if(is_category()) {
+			$url =  get_category_link( get_queried_object() );
+		} else if(is_tag()) {
+			$url = get_tag_link( get_queried_object() );
+		} else if(is_tax()) {
+			$url = get_term_link( get_queried_object() );
+		} else if(is_author()) {
+			$id = get_query_var( 'author' );
+			$url = get_author_posts_url( $id );
+		} else if(is_year()) {
+			$url = get_year_link( get_query_var('year') );
+		} else if(is_month()) {
+			$url = get_month_link( get_query_var('year'), get_query_var('monthnum') );
+		} else if(is_day()) {
+			$url = get_day_link( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
+		} else if(is_post_type_archive()) {
+			$url = get_post_type_archive_link( get_query_var('post_type') );
+		} else if(is_home()) {
+			$url = get_bloginfo('url');
+		} else {
+			$url = '';
+		}
 
-		$availability = get_post_meta( $post->ID, 'AGLSTERMS.availability', true );
-
-		if ( !empty( $availability ) )
+		if ( !empty( $url ) )
 			$attributes = array(
 				'name' => 'AGLSTERMS.availability',
-				'content' => $availability
+				'content' => $url
 			);
 			
 		if (get_option('simple_agls-toggle-scheme-attribute') == 1) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = 'DCTERMS.URI';
 		}
 
 		if ( !$echo && !empty($attributes) )

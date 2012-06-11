@@ -353,12 +353,6 @@ class SIMPLE_AGLS_Admin {
 		</p>
 
 		<p>
-			<label for="agls-availability"><?php _e( 'Availability:', SIMPLE_AGLS::$text_domain ); ?></label>
-			<br />
-			<input type="text" name="agls-availability" id="agls-availability" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.availability', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
-		</p>
-
-		<p>
 			<label for="agls-function"><?php _e( 'Function:', SIMPLE_AGLS::$text_domain ); ?></label>
 			<br />
 			<input type="text" name="agls-function" id="agls-function" value="<?php echo esc_attr( get_post_meta( $object->ID, 'AGLSTERMS.function', true ) ); ?>" size="30" tabindex="30" style="width: 99%;" />
@@ -435,7 +429,6 @@ class SIMPLE_AGLS_Admin {
 			'DCTERMS.description' => strip_tags( $_POST['agls-description'] ),
 			'DCTERMS.subject' => strip_tags( $_POST['agls-subject'] ),
 			'DCTERMS.publisher' => strip_tags( $_POST['agls-publisher'] ),
-			'AGLSTERMS.availability' => strip_tags( $_POST['agls-availability'] ),
 			'AGLSTERMS.function' => strip_tags( $_POST['agls-function'] ),
 			'AGLSTERMS.mandate' => strip_tags( $_POST['agls-mandate'] ),
 			'DCTERMS.audience' => strip_tags( $_POST['agls-audience'] ),
