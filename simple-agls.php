@@ -94,13 +94,13 @@ class SIMPLE_AGLS {
 
 		/* Add conditional agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_availability', 1 );
-		add_action( 'wp_head', __CLASS__ .'::agls_coverage', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_language', 1 );
 
 		/* Add optional agls <meta> elements to the <head> area. */
 		add_action( 'wp_head', __CLASS__ .'::agls_type', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_audience', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_contributor', 1 ); 
+		add_action( 'wp_head', __CLASS__ .'::agls_coverage', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_format', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_mandate', 1 ); 
 		add_action( 'wp_head', __CLASS__ .'::agls_relation', 1 );
@@ -880,7 +880,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = '';
 		}
 			
 		if ( !$echo && !empty($attributes) )
@@ -1003,7 +1003,7 @@ class SIMPLE_AGLS {
 		);
 		
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = ' ';
+			$attributes['scheme'] = 'DCTERMS.IMT';
 		}
 
 		if ( !$echo && !empty($attributes) )
