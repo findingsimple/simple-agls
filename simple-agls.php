@@ -909,9 +909,10 @@ class SIMPLE_AGLS {
 		$attributes = array();
 
 		$sitewide = get_option( 'agls-language' );
-
-		$language = 'en-AU';
-
+		
+		//use WP language setting
+		$language = get_bloginfo('language');
+			
 		if (!empty($sitewide) && !$show_default) 
 			$language = $sitewide;
 
