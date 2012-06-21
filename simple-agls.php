@@ -602,18 +602,18 @@ class SIMPLE_AGLS {
 
 		$sitewide = get_option( 'agls-publisher' );
 		$individual = get_post_meta( $post->ID, 'DCTERMS.publisher', true );
-
+		
+		/* Use default */
 		if (!empty($default))
 			$publisher = $default;
-
+		
+		/* If sitewide has been set and is not being overridden by default use sitewide */
 		if (!empty($sitewide) && !$show_default )
 			$publisher = $sitewide;
-
+		
+		/* If an individual publisher has been set and is not being overridden by default use individual */
 		if (!empty($individual) && !$show_default)
 			$publisher = $individual;
-
-		//if ( ( !empty($publisher ) ) && ( !empty( $default ) ) && ( empty( $individual )) && ( empty( $sitewide ))) 
-		//	$tag = '<meta name="DCTERMS.publisher" content="' . $publisher . '" />' . "\n";
 
 		if ( !empty($publisher ) )
 			$attributes = array(
@@ -622,9 +622,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			
 			$attributes['scheme'] = 'AGLSTERMS.AglsAgent';
-		
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -643,6 +641,9 @@ class SIMPLE_AGLS {
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
+	 *
+	 * http://www.agls.gov.au/documents/agls-document/ contains a list of preferred types
+	 *
 	 */
 	public static function agls_type( $args = array() ) {
 
@@ -656,8 +657,6 @@ class SIMPLE_AGLS {
 			'name' => 'DCTERMS.type',
 			'content' => 'text'
 		);
-		
-		/* http://www.agls.gov.au/documents/agls-document/ contains list of preferred types */
 		
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = 'AGLSTERMS.documentType';
@@ -677,6 +676,12 @@ class SIMPLE_AGLS {
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
+	 *
+	 *
+	 * Government agencies may use the Australian Governments’ Interactive Functions 
+	 * Thesaurus (AGIFT) as a source of function terms and a Vocabulary Encoding 
+	 * Scheme. 
+	 *
 	 */
 	public static function agls_function( $args = array() ) {
 
@@ -705,11 +710,7 @@ class SIMPLE_AGLS {
 				'name' => 'AGLSTERMS.function',
 				'content' => esc_attr( $function )
 			);
-		
-		/* Government agencies may use the Australian Governments’ Interactive Functions 
-		Thesaurus (AGIFT) as a source of function terms and a Vocabulary Encoding 
-		Scheme. */
-		
+			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
 			$attributes['scheme'] = '';
 		}
@@ -739,17 +740,17 @@ class SIMPLE_AGLS {
 
 		$attributes = array();
 
-		/* Set an empty $keywords variable. */
-		$keywords = '';
+		/* Set an empty $subject variable. */
+		$subject = '';
 
 		/* If on a singular post and not a preview. */
 		if ( is_singular() || is_admin() ) {
 
-			/* Get the meta value for the 'Keywords' meta key. */
-			$keywords = get_post_meta( $post->ID, 'Keywords', true );
-
-			/* If no keywords were found. */
-			if ( empty( $keywords ) ) {
+			/* Get the meta value for the 'DCTERMS.subject' meta key. */
+			$subject = get_post_meta( $post->ID, 'DCTERMS.subject', true );
+			
+			/* If no subject were found. */
+			if ( empty( $subject ) ) {
 
 				/* Get all taxonomies for the current post type. */
 				$taxonomies = get_object_taxonomies( $post->post_type );
@@ -761,28 +762,21 @@ class SIMPLE_AGLS {
 					foreach ( $taxonomies as $tax ) {
 
 						if ( $terms = get_the_term_list( $post->ID, $tax, '', ', ', '' ) )
-							$keywords[] = $terms;
+							$subject[] = $terms;
 					}
 
 					/* If keywords were found, join the array into a comma-separated string. */
-					if ( !empty( $keywords ) )
-						$keywords = join( ', ', $keywords );
+					if ( !empty( $subject) )
+						$subject = join( ', ', $subject );
 				}
 			}
 		}
 
-		/* If on a user/author archive page, check for user meta. */
-		elseif ( is_author() ) {
-
-			/* Get the meta value for the 'Keywords' user meta key. */
-			$keywords = get_user_meta( get_query_var( 'author' ), 'Keywords', true );
-		}
-
 		/* If we have keywords, format for output. */
-		if ( !empty( $keywords ) )
+		if ( !empty( $subject ) )
 			$attributes = array(
 				'name' => 'DCTERMS.subject',
-				'content' => esc_attr( strip_tags( $keywords ) )
+				'content' => esc_attr( strip_tags( $subject ) )
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes )  ) {
