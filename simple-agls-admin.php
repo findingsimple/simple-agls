@@ -313,7 +313,8 @@ class SIMPLE_AGLS_Admin {
 	public static function agls_meta_box_display( $object, $box ) { ?>
 	
 		<?php $args = array (
-			'echo' => false
+			'echo' => false,
+			'show_default' => true
 		); ?>
 
 		<input type="hidden" name="simple-agls-meta-box-nonce" value="<?php echo wp_create_nonce( basename( __FILE__ ) ); ?>" />

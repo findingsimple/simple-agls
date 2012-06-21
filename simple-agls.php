@@ -607,8 +607,8 @@ class SIMPLE_AGLS {
 		if (!empty($default))
 			$publisher = $default;
 		
-		/* If sitewide has been set and is not being overridden by default use sitewide */
-		if (!empty($sitewide) && !$show_default )
+		/* Override the default with the sitewide if set */
+		if (!empty($sitewide))
 			$publisher = $sitewide;
 		
 		/* If an individual publisher has been set and is not being overridden by default use individual */
@@ -692,7 +692,8 @@ class SIMPLE_AGLS {
 		extract( $args, EXTR_SKIP );
 
 		$attributes = array();
-
+		
+		/* This is the sitewide value */
 		$default = get_option( 'agls-function' );
 
 		$individual = get_post_meta( $post->ID, 'AGLSTERMS.function', true );
@@ -750,11 +751,14 @@ class SIMPLE_AGLS {
 			$subject = get_post_meta( $post->ID, 'DCTERMS.subject', true );
 			
 			/* If no subject were found. */
-			if ( empty( $subject ) ) {
+			if ( empty( $subject ) || $show_default ) {
+				
+				/* Set subject as array */
+				$subject = array();
 
 				/* Get all taxonomies for the current post type. */
 				$taxonomies = get_object_taxonomies( $post->post_type );
-
+				
 				/* If taxonomies were found for the post type. */
 				if ( is_array( $taxonomies ) ) {
 
@@ -1126,7 +1130,7 @@ class SIMPLE_AGLS {
 
 		$rights = 'Copyright ' . $date;		
 
-		if (!empty($sitewide) && !$show_default)
+		if (!empty($sitewide))
 			$rights = $sitewide;
 
 		if (!empty($individual) && !$show_default)
