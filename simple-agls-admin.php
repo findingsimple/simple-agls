@@ -110,6 +110,14 @@ class SIMPLE_AGLS_Admin {
 			$page,
 			'simple_agls-site-wide'
 		);
+		
+		add_settings_field(
+			'agls-publisher',
+			'Publisher value',
+			__CLASS__ . '::simple_agls_site_wide_publisher_callback',
+			$page,
+			'simple_agls-site-wide'
+		);
 
 		add_settings_field(
 			'agls-function',
@@ -169,6 +177,7 @@ class SIMPLE_AGLS_Admin {
 		register_setting( $page, 'agls-creator-address' );
 		register_setting( $page, 'agls-creator-contact' );
 		
+		register_setting( $page, 'agls-publisher' );
 		register_setting( $page, 'agls-function' );
 		register_setting( $page, 'agls-audience' );
 		register_setting( $page, 'agls-coverage' );
@@ -245,6 +254,12 @@ class SIMPLE_AGLS_Admin {
 	public static function simple_agls_site_wide_corporate_contact_callback() {
 	
 		echo '<input name="agls-creator-contact" type="text" id="agls-creator-contact" class="regular-text" value="'. esc_attr( get_option('agls-creator-contact') ) . '" />';
+		
+	}
+
+	public static function simple_agls_site_wide_publisher_callback() {
+	
+		echo '<input name="agls-publisher" type="text" id="agls-publisher" class="regular-text" value="'. esc_attr( get_option('agls-publisher') ) . '" />';
 		
 	}
 
