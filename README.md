@@ -1,38 +1,19 @@
 # Simple AGLS
 
-Website: [Finding Simple](http://findingsimple.com/)
+* Tags: post, page, admin, agls, meta, editor, open gov, gov2, dublin core
+* Requires at least: 3.0
+* Tested up to: 3.4.1
+* Stable tag: 1.0
 
-Contributors: Finding Simple
-
-Tags: agls, dublin core, meta, open gov
-
-Requires at least: 3.1
-
-Tested up to: 3.2.1
-
-Stable tag: 1.0
+Insert Australian Government Locater Service (AGLS) meta tags within the head of your site.
 
 ## Description
 
-Simple plugin that helps integrate AGLS meta tags into your WordPress powered site.
+This plugin makes it simple to insert Australian Government Locater Service (AGLS) meta tags within the head of your WordPress Powered Site.
 
-## Installation
+## Features
 
-The plugin can be installed in 3 easy steps:
-
-1. Unzip the "simple-agls" archive and put the folder into your plugins folder (/wp-content/plugins/).
-2. Activate the plugin from the Plugins menu.
-3. Set fields on your pages, posts and custom post types.
-
-## Frequently Asked Questions
-
-Coming Soon
-
-## Screenshots
-
-Coming Soon
-
-## Changelog
-
-* 1.0 - initial release
-
+* **Automatic** Automatically inserts smart defaults out of the box to get you started.
+* **Defaults** Ability to set sitewide default values.
+* **Meta Box** Set values on a per post/page basis for granular control over the meta tags.
+* **Filters** Not happy with some of the output - simply write your own filter to change the tags.
