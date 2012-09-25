@@ -188,6 +188,11 @@ class SIMPLE_AGLS {
 	/**
 	 * Creator term
 	 *
+	 * HTML/XHTML syntax - DCTERMS.creator
+	 * Definition - An entity primarily responsible for making the resource
+	 * Obligation - Mandatory
+	 * Syntax encoding schemes - AglsAgent, GOLD, URI
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -230,6 +235,11 @@ class SIMPLE_AGLS {
 	 *
 	 * Auto populates with date created
 	 *
+	 * HTML/XHTML syntax - DCTERMS.date
+	 * Definition - A point or period of time associated with an event in the life of the resource.
+	 * Obligation - Mandatory unless a related property is used.
+	 * Syntax encoding schemes - ISO8601, XSD.date, XSD.dateTime
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -265,6 +275,11 @@ class SIMPLE_AGLS {
 	
 	/**
 	 * Date Modified term
+	 *
+	 * HTML/XHTML syntax - DCTERMS.modified
+	 * Definition - Date on which the resource was changed.
+	 * Obligation - Optional — may be used in place of date.
+	 * Syntax encoding schemes - ISO8601, XSD.date, XSD.dateTime
 	 *
 	 * Auto populates with date modified
 	 *
@@ -303,6 +318,10 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Description term
+	 *
+	 * HTML/XHTML syntax - DCTERMS.description
+	 * Definition - An account of the resource.
+	 * Obligation - Recommended.
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -386,6 +405,10 @@ class SIMPLE_AGLS {
 	/**
 	 * Title term
 	 *
+	 * HTML/XHTML syntax - DCTERMS.title
+	 * Definition - A name given to the resource.
+	 * Obligation - Mandatory.
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -450,6 +473,11 @@ class SIMPLE_AGLS {
 	 *
 	 * Auto populate with the permalink (page url)
 	 *
+	 * HTML/XHTML syntax - DCTERMS.identifier
+	 * Definition - An unambiguous reference to the resource within a given context.
+	 * Obligation - Conditional - Mandatory for online resources.
+	 * Syntax encoding schemes - DOI,ISBN,ISSN,URI
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -510,6 +538,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Availability term
+	 *
+	 * HTML/XHTML syntax - AGLSTERMS.availability
+	 * Definition - How the resource can be obtained or accessed, or contact information for obtaining the resource.
+	 * Obligation - Conditional - Mandatory for descriptions of offline resources.
+	 * Syntax encoding schemes - AglsAvail, URI
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -574,6 +607,11 @@ class SIMPLE_AGLS {
 	/**
 	 * Publisher term
 	 *
+	 * HTML/XHTML syntax - DCTERMS.publisher
+	 * Definition - An entity responsible for making the resource available.
+	 * Obligation - Conditional—Mandatory for information resources (optional for descriptions of services).
+	 * Syntax encoding schemes - AglsAgent, GOLD, URI
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -636,7 +674,12 @@ class SIMPLE_AGLS {
 	/**
 	 * Type term
 	 *
-	 * Auto populate with the default type "text" - all web pages are text
+	 * Auto populate with the default type "text" - all web pages are text http://dublincore.org/documents/2000/07/11/dcmi-type-vocabulary/#text
+	 *
+	 * HTML/XHTML syntax - DCTERMS.type
+	 * Definition -￼The nature or genre of the resource.
+	 * Obligation - Optional
+	 * Vocabulary encoding schemes -￼DCMIType
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -659,7 +702,7 @@ class SIMPLE_AGLS {
 		);
 		
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = 'AGLSTERMS.documentType';
+			$attributes['scheme'] = 'DCTERMS.DCMIType';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -673,10 +716,14 @@ class SIMPLE_AGLS {
 	/**
 	 * Function term
 	 *
+	 * HTML/XHTML syntax - AGLSTERMS.function
+	 * Definition - The business function to which the resource relates.
+	 * Obligation - Recommended if subject is not used.
+	 * Vocabulary encoding scheme - AGIFT
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
-	 *
 	 *
 	 * Government agencies may use the Australian Governments’ Interactive Functions 
 	 * Thesaurus (AGIFT) as a source of function terms and a Vocabulary Encoding 
@@ -713,7 +760,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = '';
+			$attributes['scheme'] = 'AGLSTERMS.AGIFT';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -726,6 +773,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Subject term
+	 *
+	 * HTML/XHTML syntax - DCTERMS.subject
+	 * Definition - The topic of the resource.
+	 * Obligation -￼Recommended if function is not used.
+	 * Vocabulary encoding scheme - APAIS, APT, LCSH, MESH, TAGS
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -798,6 +850,11 @@ class SIMPLE_AGLS {
 	/**
 	 * Audience term
 	 *
+	 * HTML/XHTML syntax - DCTERMS.audience
+	 * Definition -￼A class of entity for whom the resource is intended or useful.
+	 * Obligation - Optional
+	 * Vocabulary encoding schemes -￼agls-audience, ANZSCO, ANZSIC, edna-audience
+	 *
 	 * If no audience set, auto populates with All
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
@@ -846,6 +903,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Coverage term
+	 *
+	 * HTML/XHTML syntax -￼DCTERMS.coverage
+	 * Definition -￼The spatial or temporal topic of the resource, the spatial applicability of the resource, or the jurisdiction under which the resource is relevant.
+	 * Obligation - Optional
+	 * Syntax encoding schemes -￼Box, Point
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -896,6 +958,11 @@ class SIMPLE_AGLS {
 	 *
 	 * Defaults to "en-AU" if not set site-wide
 	 *
+	 * HTML/XHTML syntax - DCTERMS.language
+	 * Definition - A language of the resource.
+	 * Obligation - Recommended where the language of the resource is not English.
+	 * Syntax encoding scheme - RFC4646
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -936,6 +1003,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Contributor term
+	 *
+	 * HTML/XHTML syntax -￼DCTERMS.contributor
+	 * Definition -￼An entity responsible for making contributions to the resource.
+	 * Obligation - Optional
+	 * Syntax encoding schemes -￼AglsAgent, GOLD, URI
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -984,6 +1056,11 @@ class SIMPLE_AGLS {
 	/**
 	 * Format term
 	 *
+	 * HTML/XHTML syntax -￼DCTERMS.format
+	 * Definition - The file format, physical medium, or dimensions of the resource.
+	 * Obligation - Optional
+	 * Syntax encoding scheme - IMT
+	 *
 	 * Auto populate with the doc type
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
@@ -1018,6 +1095,11 @@ class SIMPLE_AGLS {
 	/**
 	 * Mandate term
 	 *
+	 * HTML/XHTML syntax -￼AGLSTERMS.mandate
+	 * Definition - A specific legal instrument which requires or drives the creation or provision of the resource.
+	 * Obligation - Optional
+	 * Syntax encoding scheme - URI
+	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
 	 * @since 1.0
@@ -1051,7 +1133,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = '';
+			$attributes['scheme'] = 'DCTERMS.URI';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -1064,6 +1146,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Relation term
+	 *
+	 * HTML/XHTML syntax -￼DCTERMS.relation
+	 * Definition - A related resource.
+	 * Obligation - Optional
+	 * Syntax encoding scheme - URI
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -1088,7 +1175,7 @@ class SIMPLE_AGLS {
 			);
 			
 		if ( ( get_option('simple_agls-toggle-scheme-attribute') == 1 ) && !empty( $attributes ) ) {
-			$attributes['scheme'] = '';
+			$attributes['scheme'] = 'DCTERMS.URI';
 		}
 
 		if ( !$echo && !empty($attributes) )
@@ -1103,6 +1190,11 @@ class SIMPLE_AGLS {
 	 * Rights term
 	 *
 	 * Auto populate copyright information
+	 *
+	 * HTML/XHTML syntax -￼DCTERMS.rights
+	 * Definition - Information about rights held in and over the resource.
+	 * Obligation - Optional
+	 * Syntax encoding scheme - URI
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
@@ -1129,7 +1221,7 @@ class SIMPLE_AGLS {
 		else
 			$date = date( esc_attr__( 'Y', self::$text_domain ) );
 
-		$rights = 'Copyright ' . $date;		
+		$rights = 'Copyright Commonwealth of Australia' . $date;		
 
 		if (!empty($sitewide))
 			$rights = $sitewide;
@@ -1157,6 +1249,11 @@ class SIMPLE_AGLS {
 
 	/**
 	 * Source term
+	 *
+	 * HTML/XHTML syntax -￼DCTERMS.source
+	 * Definition - Information about a resource from which the described resource is derived.
+	 * Obligation - Optional
+	 * Syntax encoding scheme - ISBN, ISSN, URI
 	 *
 	 * @author Jason Conroy <jason@findingsimple.com>
 	 * @package SIMPLE-AGLS
