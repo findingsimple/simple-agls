@@ -514,6 +514,7 @@ class SIMPLE_AGLS {
 			$url = get_post_type_archive_link( get_query_var('post_type') );
 		} else if(is_home()) {
 			$url = get_bloginfo('url');
+			$url = preg_replace("~^https?://[^/]+$~", "$0/", $url); //trailing slash
 		} else {
 			$url = '';
 		}
@@ -582,6 +583,7 @@ class SIMPLE_AGLS {
 			$url = get_post_type_archive_link( get_query_var('post_type') );
 		} else if(is_home()) {
 			$url = get_bloginfo('url');
+			$url = preg_replace("~^https?://[^/]+$~", "$0/", $url); //trailing slash
 		} else {
 			$url = '';
 		}
