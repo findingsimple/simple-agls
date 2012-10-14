@@ -71,13 +71,8 @@ class SIMPLE_AGLS {
 			'echo' => true, 
 			'show_default' => false,
 			'before' => '', 
-			'after' => "\n",
-			'start' => "<!-- SIMPLE-AGLS START -->",
-			'end' => "<!-- SIMPLE-AGLS END -->"
+			'after' => "\n"
 		); 
-						
-		/* Top */
-		add_action( 'wp_head', __CLASS__ .'::agls_comment_start', 1 ); 
 
 		/* Specify the schema/s used */
 		add_action( 'wp_head', __CLASS__ .'::agls_namespace', 1 ); 
@@ -107,51 +102,7 @@ class SIMPLE_AGLS {
 		add_action( 'wp_head', __CLASS__ .'::agls_rights', 1 );
 		add_action( 'wp_head', __CLASS__ .'::agls_source', 1 );
 
-		/* Tail */
-		add_action( 'wp_head', __CLASS__ .'::agls_comment_end', 1 ); 
-
 	} 
-
-
-	/**
-	 * Meta start comment
-	 *
-	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package SIMPLE-AGLS
-	 * @since 1.0
-	 */
-	public static function agls_comment_start( $args = array() ) {
-	
-		$args = wp_parse_args( $args, self::$defaults );
-		$args = apply_filters( 'agls_comment_start_args', $args );
-		extract( $args, EXTR_SKIP );
-		
-		if ( !$echo )
-			return $before . $start . $after;
-		
-		echo $before . $start . $after;
-
-	}
-
-	/**
-	 * Meta end comment
-	 *
-	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package SIMPLE-AGLS
-	 * @since 1.0
-	 */
-	public static function agls_comment_end( $args = array() ) {
-
-		$args = wp_parse_args( $args, self::$defaults );
-		$args = apply_filters( 'agls_comment_end_args', $args );
-		extract( $args, EXTR_SKIP );
-
-		if ( !$echo )
-			return $before . $end . $after;
-		
-		echo $before . $end . $after;
-		
-	}
 
 	/**
 	 * Specify namespace/s used
