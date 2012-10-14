@@ -447,9 +447,14 @@ class SIMPLE_AGLS {
 			$title = __( 'Archives', self::$text_domain );
 		} else if(is_404()) {
 			$title = __( 'Page Not Found', self::$text_domain );
-		} elseif ( is_home() || is_front_page() ) {
-			$title = get_bloginfo( 'name' );
-		}
+		} else if(is_home() && !is_front_page()) {
+			$title = get_the_title( get_option('page_for_posts', true) );
+		} else if(is_front_page() || (is_home() && is_front_page()) ) {
+			$title = get_bloginfo('name');
+		} 
+
+		/* Apply the wp_title filters so we're compatible with plugins. */
+		$title = apply_filters( 'wp_title', $title );
 
 		if ( !empty( $individual ) && !$show_default ) 
 			$title = $individual;
@@ -490,11 +495,11 @@ class SIMPLE_AGLS {
 
 		$attributes = array();
 
-		if (is_singular()) {
+		if ((is_singular() && !is_front_page()) || is_admin()) {
 			$url = get_permalink();
 		} else if(is_search()) {
 			$search = get_query_var('s');
-			$url = get_bloginfo('url') . "/search/". $search;
+			$url = get_search_link( $search );
 		} else if(is_category()) {
 			$url =  get_category_link( get_queried_object() );
 		} else if(is_tag()) {
@@ -512,7 +517,9 @@ class SIMPLE_AGLS {
 			$url = get_day_link( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
 		} else if(is_post_type_archive()) {
 			$url = get_post_type_archive_link( get_query_var('post_type') );
-		} else if(is_home()) {
+		} else if(is_home() && !is_front_page()) {
+			$url = get_permalink( get_option('page_for_posts', true) );
+		} else if(is_front_page() || (is_home() && is_front_page()) ) {
 			$url = get_bloginfo('url');
 			$url = preg_replace("~^https?://[^/]+$~", "$0/", $url); //trailing slash
 		} else {
@@ -559,11 +566,11 @@ class SIMPLE_AGLS {
 
 		$attributes = array();
 		
-		if (is_singular()) {
+		if ((is_singular() && !is_front_page()) || is_admin()) {
 			$url = get_permalink();
 		} else if(is_search()) {
 			$search = get_query_var('s');
-			$url = get_bloginfo('url') . "/search/". $search;
+			$url = get_search_link( $search );
 		} else if(is_category()) {
 			$url =  get_category_link( get_queried_object() );
 		} else if(is_tag()) {
@@ -581,7 +588,9 @@ class SIMPLE_AGLS {
 			$url = get_day_link( get_query_var('year'), get_query_var('monthnum'), get_query_var('day') );
 		} else if(is_post_type_archive()) {
 			$url = get_post_type_archive_link( get_query_var('post_type') );
-		} else if(is_home()) {
+		} else if(is_home() && !is_front_page()) {
+			$url = get_permalink( get_option('page_for_posts', true) );
+		} else if(is_front_page() || (is_home() && is_front_page()) ) {
 			$url = get_bloginfo('url');
 			$url = preg_replace("~^https?://[^/]+$~", "$0/", $url); //trailing slash
 		} else {
