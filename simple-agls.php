@@ -405,7 +405,7 @@ class SIMPLE_AGLS {
 		} 
 
 		/* Apply the wp_title filters so we're compatible with plugins. */
-		$title = apply_filters( 'wp_title', $title );
+		$title = apply_filters( 'wp_title', $title, 10, 3 );
 
 		if ( !empty( $individual ) && !$show_default ) 
 			$title = $individual;
