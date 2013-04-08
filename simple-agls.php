@@ -1183,7 +1183,7 @@ class SIMPLE_AGLS {
 		else
 			$date = date( esc_attr__( 'Y', self::$text_domain ) );
 
-		$rights = 'Copyright Commonwealth of Australia' . $date;		
+		$rights = 'Copyright Commonwealth of Australia ' . $date;		
 
 		if (!empty($sitewide))
 			$rights = $sitewide;
