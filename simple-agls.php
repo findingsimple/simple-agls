@@ -1,37 +1,41 @@
 <?php
-/*
-Plugin Name: Simple AGLS
-Plugin URI: http://plugins.findingsimple.com
-Description: Simple plugin that helps integrate AGLS meta data into your WordPress powered site.
-Version: 1.0
-Author: Finding Simple
-Author URI: http://findingsimple.com
-License: GPL2
-*/
-/*  Copyright 2008 - 2014 Finding Simple  (email : plugins@findingsimple.com)
-
-	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as 
-	published by the Free Software Foundation.
-
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
-
-	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*/
 /**
+ * Plugin Name: Simple AGLS
+ * Plugin URI: http://plugins.findingsimple.com
+ * Description: Simple plugin that helps integrate AGLS meta data into your WordPress powered site.
+ * Version: 1.0
+ * Author: Finding Simple
+ * Author URI: http://findingsimple.com
+ * License: GPL2
+ * 
+ * 
+ * Copyright 2014 Finding Simple  (email : plugins@findingsimple.com)
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License, version 2, as 
+ * published by the Free Software Foundation.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * 
  * @package Simple AGLS
- * @version 1.0
+ * @since 1.0
  * @author Jason Conroy <jason@findingsimple.com>
  * @copyright Copyright (c) 2008 - 2014 Finding Simple
  * @link http://findingsimple.com/
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
+/**
+ * Admin settings
+ */
 require_once dirname( __FILE__ ) . '/simple-agls-admin.php';
 
 if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
@@ -40,9 +44,7 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 	 * So that themes and other plugins can customise the text domain, the FS_AGLS should
 	 * not be initialized until after the plugins_loaded and after_setup_theme hooks.
 	 * However, it also needs to run early on the init hook.
-	 *
-	 * @author Jason Conroy <jason@findingsimple.com>
-	 * @package SIMPLE-AGLS
+	 * 
 	 * @since 1.0
 	 */
 	function initialize_simple_agls() {
@@ -57,9 +59,7 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 
 		/**
 		 * Hook into WordPress where appropriate.
-		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
+		 * 
 		 * @since 1.0
 		 */
 		public static function init() {
@@ -107,8 +107,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		/**
 		 * Specify namespace/s used
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_namespace( $args = array() ) {
@@ -144,8 +142,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Mandatory
 		 * Syntax encoding schemes - AglsAgent, GOLD, URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_creator( $args = array() ) {
@@ -191,8 +187,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Mandatory unless a related property is used.
 		 * Syntax encoding schemes - ISO8601, XSD.date, XSD.dateTime
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_date( $args = array() ) {
@@ -234,8 +228,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 *
 		 * Auto populates with date modified
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_date_modified( $args = array() ) {
@@ -274,8 +266,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Definition - An account of the resource.
 		 * Obligation - Recommended.
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_description( $args = array() ) {
@@ -360,8 +350,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Definition - A name given to the resource.
 		 * Obligation - Mandatory.
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_title( $args = array() ) {
@@ -434,8 +422,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Conditional - Mandatory for online resources.
 		 * Syntax encoding schemes - DOI,ISBN,ISSN,URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_identifier( $args = array() ) {
@@ -503,8 +489,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Conditional - Mandatory for descriptions of offline resources.
 		 * Syntax encoding schemes - AglsAvail, URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_availability( $args = array() ) {
@@ -574,8 +558,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Conditional—Mandatory for information resources (optional for descriptions of services).
 		 * Syntax encoding schemes - AglsAgent, GOLD, URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_publisher( $args = array() ) {
@@ -643,8 +625,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Vocabulary encoding schemes -￼DCMIType
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 *
 		 * http://www.agls.gov.au/documents/agls-document/ contains a list of preferred types
@@ -683,8 +663,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Recommended if subject is not used.
 		 * Vocabulary encoding scheme - AGIFT
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 *
 		 * Government agencies may use the Australian Governments’ Interactive Functions 
@@ -741,8 +719,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation -￼Recommended if function is not used.
 		 * Vocabulary encoding scheme - APAIS, APT, LCSH, MESH, TAGS
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_subject( $args = array() ) {
@@ -819,8 +795,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 *
 		 * If no audience set, auto populates with All
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_audience( $args = array() ) {
@@ -871,8 +845,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding schemes -￼Box, Point
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_coverage( $args = array() ) {
@@ -925,8 +897,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Recommended where the language of the resource is not English.
 		 * Syntax encoding scheme - RFC4646
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_language( $args = array() ) {
@@ -971,8 +941,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding schemes -￼AglsAgent, GOLD, URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_contributor( $args = array() ) {
@@ -1025,8 +993,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 *
 		 * Auto populate with the doc type
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_format( $args = array() ) {
@@ -1062,8 +1028,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding scheme - URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_mandate( $args = array() ) {
@@ -1114,8 +1078,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding scheme - URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_relation( $args = array() ) {
@@ -1158,8 +1120,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding scheme - URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_rights( $args = array() ) {
@@ -1217,8 +1177,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		 * Obligation - Optional
 		 * Syntax encoding scheme - ISBN, ISSN, URI
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */
 		public static function agls_source( $args = array() ) {
@@ -1254,8 +1212,6 @@ if ( ! class_exists( 'SIMPLE_AGLS' ) ) {
 		/**
 		 * Format output according to argument
 		 *
-		 * @author Jason Conroy <jason@findingsimple.com>
-		 * @package SIMPLE-AGLS
 		 * @since 1.0
 		 */	
 		public static function agls_output( $attributes = array() , $args = array() ) {
